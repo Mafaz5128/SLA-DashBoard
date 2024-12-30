@@ -13,12 +13,14 @@ st.title("Station Revenue Analytics")
 act_avg = df.groupby('Month')['ACT -USD'].mean()  # Mean for ACTUAL
 lyr_avg = df.groupby('Month')['LYR-USD (2023/24)'].mean()  # Mean for LAST YEAR
 act_tg = df.groupby('Month')[' TGT-USD'].mean()  # Mean for TARGET
+exrate_avg = df.groupby('Month')['Act. Using-Bgt. ex. Rates'].mean()  # Mean for Exchange Rates
 
 # Sorting the index (month names) to ensure proper order
 month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 act_avg = act_avg.reindex(month_order)
 lyr_avg = lyr_avg.reindex(month_order)
 act_tg = act_tg.reindex(month_order)
+exrate_avg = exrate_avg.reindex(month_order)
 
 # Plotting the first graph for ACTUAL and LAST YEAR
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -53,7 +55,7 @@ st.subheader("ACTUAL vs TARGET Revenue Trend")
 st.pyplot(fig)
 
 # Grouping the data by Month and Region for the third graph
-act_avg_region = df.groupby(['Month', 'Region'])['ACT -USD'].sum().reset_index()
+act_avg_region = df.groupby(['Month', 'Region'])['ACT -USD'].mean().reset_index()
 
 # Defining the order of months for consistent plotting
 act_avg_region['Month'] = pd.Categorical(act_avg_region['Month'], categories=month_order, ordered=True)
@@ -62,7 +64,6 @@ act_avg_region = act_avg_region.sort_values('Month')
 # Setting the color palette
 palette = sns.color_palette("husl", len(act_avg_region['Region'].unique()))
 
-# Creating the third plot for Revenue by Month and Region
 # Creating the third plot for Revenue by Month and Region
 fig, ax = plt.subplots(figsize=(14, 8))
 
@@ -80,11 +81,26 @@ ax.set_xlabel('Month', fontsize=12)
 ax.set_ylabel('Revenue (USD)', fontsize=12)
 ax.set_title('Revenue by Month and Region', fontsize=14)
 ax.set_xticklabels(month_order, rotation=45, fontsize=10)
-ax.tick_params(axis='y', labelsize=10)  # Updated line
+ax.tick_params(axis='y', labelsize=10)
 
 # Adding tight layout for better spacing
 plt.tight_layout()
 
 # Displaying the third plot in Streamlit
 st.subheader("Revenue by Month and Region")
+st.pyplot(fig)
+
+# Plotting the fourth graph for Average Exchange Rate
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.plot(exrate_avg, marker='o', label='Average Exchange Rate')
+
+# Adding labels, title, and legend for the exchange rate graph
+ax.set_xlabel('Month')
+ax.set_ylabel('Exchange Rate')
+ax.set_title('Average Exchange Rate by Month')
+ax.set_xticklabels(month_order, rotation=45)
+ax.legend()
+
+# Displaying the exchange rate plot in Streamlit
+st.subheader("Average Exchange Rate Trend")
 st.pyplot(fig)
