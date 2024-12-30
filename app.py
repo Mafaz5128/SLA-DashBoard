@@ -133,9 +133,14 @@ fig_contribution_region.update_layout(
 st.subheader("Revenue Contribution by Region")
 st.plotly_chart(fig_contribution_region, use_container_width=True)
 
-# Adding custom CSS styles for filters
+# Adding custom CSS styles for the dashboard and filters
 st.markdown("""
     <style>
+    /* Apply background color to the entire dashboard */
+    .main {
+        background-color: #f4f8fb;  /* Light blue background */
+    }
+
     .stSelectbox, .stMarkdown, .stRadio, .stButton {
         background-color: #f4f8fb; 
         border-radius: 10px;
