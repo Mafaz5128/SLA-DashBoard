@@ -75,7 +75,39 @@ fig.for_each_trace(
 fig.update_layout(xaxis_title="Month", yaxis_title="Total Revenue (USD)")
 col1.plotly_chart(fig, use_container_width=True)
 
-# Second graph: Revenue by Month (Actual vs Target)
+# Second graph: Revenue Contribution by Region (Pie Chart)
+# Step 1: Calculate the sum of 'ACT -USD' by Region
+revenue_by_region = filtered_df.groupby('Region')['ACT -USD'].sum()
+
+# Step 2: Calculate the total 'ACT -USD'
+total_revenue = revenue_by_region.sum()
+
+# Step 3: Calculate the percentage contribution by region
+revenue_percentage = (revenue_by_region / total_revenue) * 100
+
+# Step 4: Create the Pie chart
+fig_pie = go.Figure(data=[go.Pie(
+    labels=revenue_percentage.index,
+    values=revenue_percentage,
+    hoverinfo='label+percent',
+    textinfo='percent',
+    marker=dict(colors=sns.color_palette("Set3", len(revenue_percentage)).as_hex())  # Use a seaborn color palette
+)])
+
+# Customize layout (title centered)
+fig_pie.update_layout(
+    title={
+        'text': "Revenue Contribution by Region",
+        'x': 0.5,  # Center the title horizontally
+        'xanchor': 'center',  # Anchor title to the center
+    },
+    margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+)
+
+# Display pie chart
+col2.plotly_chart(fig_pie, use_container_width=True)
+
+# Third graph: Revenue by Month (Actual vs Target)
 act_avg = filtered_df.groupby('Month')['ACT -USD'].mean()
 act_tg = filtered_df.groupby('Month')[' TGT-USD'].mean()
 
@@ -95,9 +127,9 @@ fig_target.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-col2.plotly_chart(fig_target, use_container_width=True)
+col3.plotly_chart(fig_target, use_container_width=True)
 
-# Third graph: Exchange Rate Gain/Loss by Month
+# Fourth graph: Exchange Rate Gain/Loss by Month
 exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum()
 exloss_avg_ly = filtered_df.groupby('Month')['Exchange  -gain/(loss)'].sum()
 
@@ -118,37 +150,7 @@ fig_exloss.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-col3.plotly_chart(fig_exloss, use_container_width=True)
-
-# Fourth graph: Revenue Contribution by Region
-con_act_avg_region = filtered_df.groupby('Region')['REVENUE CONT. % - Actual'].mean()
-con_ly_avg_region = filtered_df.groupby('Region')['REVENUE CONT. %-LYR'].mean()
-
-fig_contribution_region = go.Figure()
-fig_contribution_region.add_trace(go.Scatter(
-    x=con_act_avg_region.index, 
-    y=con_act_avg_region, 
-    mode='lines+markers', 
-    name='Contribution - Actual', 
-    marker=dict(symbol='circle', color='#00CC96')
-))
-fig_contribution_region.add_trace(go.Scatter(
-    x=con_ly_avg_region.index, 
-    y=con_ly_avg_region, 
-    mode='lines+markers', 
-    name='Contribution - Last Year', 
-    marker=dict(symbol='square', color='#636EFA')
-))
-
-fig_contribution_region.update_layout(
-    title="Revenue Contribution by Region",
-    xaxis_title="Region",
-    yaxis_title="Contribution (%)",
-    legend_title="Legend",
-    xaxis=dict(tickangle=45)
-)
-
-col4.plotly_chart(fig_contribution_region, use_container_width=True)
+col4.plotly_chart(fig_exloss, use_container_width=True)
 
 # Adding custom CSS styles for the dashboard and filters
 st.markdown("""
