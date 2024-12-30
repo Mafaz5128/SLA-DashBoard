@@ -36,7 +36,7 @@ filtered_df = filter_df(df, selected_pos, selected_region, selected_month)
 
 # Overall Revenue Trend Chart
 st.subheader("Overall Revenue Trend")
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'],
+melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
                              var_name='Revenue Type', value_name='Revenue (USD)')
 fig = px.line(
     melted_df,
@@ -65,7 +65,7 @@ st.plotly_chart(fig)
 
 # Specific Revenue Trend Chart
 st.subheader("Specific Revenue Trend")
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'],
+melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
                              var_name='Revenue Type', value_name='Revenue (USD)')
 fig = px.line(
     melted_df,
@@ -97,7 +97,7 @@ filtered_df_separate = filter_df(df, selected_pos, selected_region_filter, selec
 
 # Separate graphs for filtered data by month
 st.subheader("Separate Revenue Trend by Month")
-melted_df_separate = filtered_df_separate.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'],
+melted_df_separate = filtered_df_separate.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
                                                var_name='Revenue Type', value_name='Revenue (USD)')
 fig_separate = px.line(
     melted_df_separate,
@@ -112,7 +112,7 @@ st.plotly_chart(fig_separate)
 
 # Separate graphs for filtered data by region
 st.subheader("Separate Revenue Trend by Region")
-melted_df_region = filtered_df_separate.melt(id_vars=["Region"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'],
+melted_df_region = filtered_df_separate.melt(id_vars=["Region"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
                                              var_name='Revenue Type', value_name='Revenue (USD)')
 fig_region = px.line(
     melted_df_region,
