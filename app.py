@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 # Load the data
-df = pd.read_excel("C:/Users/mafaz/OneDrive/Desktop/SriLankan Airlines/Station data/Stationary_Perf.xlsx")
+df = pd.read_excel("Stationary_Perf.xlsx")
 
 # Streamlit UI
 st.set_page_config(page_title="Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
