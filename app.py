@@ -48,7 +48,7 @@ filtered_df = filter_df(df, None, selected_month)
 
 # Overall Revenue Trend Chart (Average Revenue by Type)
 st.subheader("Overall Revenue Trend")
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
+melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'],
                              var_name='Revenue Type', value_name='Revenue (USD)')
 
 # Group by Month and Revenue Type to calculate average revenue
@@ -58,7 +58,7 @@ avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].m
 fig = px.line(
     avg_revenue_df,
     x='Month',
-    y='Revenue (USD)',
+    y='Average Revenue (USD)',
     color='Revenue Type',
     title="Overall Average Revenue Trend by Month",
     markers=True
