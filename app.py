@@ -9,25 +9,25 @@ df = pd.read_excel("Stationary_Perf.xlsx")
 st.set_page_config(page_title="Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
 st.title("Revenue Analysis Dashboard")
 
-# Sidebar for filters
+# Sidebar for filters (Only Month and Region)
 st.sidebar.header("Filters")
 
-# Add "Select All" option for POS, Region, and Month
-selected_pos = st.sidebar.selectbox(
-    "Select POS", 
-    options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0
+# Add "Select All" option for Month and Region
+selected_month = st.sidebar.selectbox(
+    "Select Month", 
+    options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], index=0
 )
 selected_region = st.sidebar.selectbox(
     "Select Region", 
     options=["All"] + list(sorted(df['Region'].unique())), index=0
 )
-selected_month = st.sidebar.selectbox(
-    "Select Month", 
-    options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], index=0
-)
 
-# Additional filters for separate graphs
+# Additional filters for separate graphs (Including POS)
 st.sidebar.header("Additional Filters")
+selected_pos = st.sidebar.selectbox(
+    "Select POS", 
+    options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0
+)
 selected_month_filter = st.sidebar.selectbox(
     "Select Month for Separate Graph", 
     options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], 
@@ -49,8 +49,8 @@ def filter_df(df, pos=None, region=None, month=None):
         filtered_df = filtered_df[filtered_df['Month'] == month]
     return filtered_df
 
-# Filtered Data based on main filters
-filtered_df = filter_df(df, selected_pos, selected_region, selected_month)
+# Filtered Data based on main filters (Month and Region)
+filtered_df = filter_df(df, None, selected_region, selected_month)
 
 # Overall Revenue Trend Chart
 st.subheader("Overall Revenue Trend")
@@ -110,7 +110,7 @@ fig = px.bar(
 fig.update_layout(xaxis_title="Month", yaxis_title="Gain/Loss (USD)")
 st.plotly_chart(fig)
 
-# Filtered Data based on additional filters (Month and Region for separate graphs)
+# Filtered Data based on additional filters (Month and Region for separate graphs, POS for individual POS graphs)
 filtered_df_separate = filter_df(df, selected_pos, selected_region_filter, selected_month_filter)
 
 # Separate graphs for filtered data by month
