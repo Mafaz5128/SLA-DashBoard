@@ -123,8 +123,8 @@ fig_exloss.update_layout(
 )
 
 # Fourth graph: Revenue Contribution by Month
-con_act_avg = df.groupby('Month')['REVENUE CONT. % - Actual'].mean()
-con_ly_avg_ly = df.groupby('Month')['REVENUE CONT. %-LYR'].mean()
+con_act_avg = df.groupby('Region')['REVENUE CONT. % - Actual'].mean()
+con_ly_avg_ly = df.groupby('Region')['REVENUE CONT. %-LYR'].mean()
 
 # Ensure proper month ordering
 con_act_avg = con_act_avg.reindex(month_order)
