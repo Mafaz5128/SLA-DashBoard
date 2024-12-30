@@ -21,7 +21,7 @@ selected_pos = st.sidebar.selectbox(
 st.sidebar.header("Additional Filters")
 selected_month_filter = st.sidebar.selectbox(
     "Select Month for Separate Graph", 
-    options=['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], 
+    options=['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], 
     index=0
 )
 selected_region_filter = st.sidebar.selectbox(
