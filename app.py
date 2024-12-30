@@ -133,6 +133,51 @@ fig_contribution_region.update_layout(
 st.subheader("Revenue Contribution by Region")
 st.plotly_chart(fig_contribution_region, use_container_width=True)
 
+# Adding custom CSS styles for filters
+st.markdown("""
+    <style>
+    .stSelectbox, .stMarkdown, .stRadio, .stButton {
+        background-color: #f4f8fb; 
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .stSelectbox select {
+        font-size: 16px;
+        color: #333;
+    }
+
+    .stSelectbox label {
+        color: #4f5d73;
+        font-weight: bold;
+    }
+
+    .stMarkdown {
+        background-color: #e8f0fe;
+        border: 1px solid #d0e7fe;
+    }
+
+    .stButton {
+        background-color: #66b3ff;
+        color: white;
+    }
+    
+    .stButton:hover {
+        background-color: #0059b3;
+    }
+
+    .stSelectbox select:focus {
+        border: 2px solid #66b3ff;
+        outline: none;
+    }
+
+    .stSelectbox label:hover {
+        color: #0059b3;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # Filters Section
 st.subheader("Filters")
 selected_pos = st.selectbox("Select POS", options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0)
