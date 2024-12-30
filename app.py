@@ -63,6 +63,7 @@ act_avg_region = act_avg_region.sort_values('Month')
 palette = sns.color_palette("husl", len(act_avg_region['Region'].unique()))
 
 # Creating the third plot for Revenue by Month and Region
+# Creating the third plot for Revenue by Month and Region
 fig, ax = plt.subplots(figsize=(14, 8))
 
 # Looping through each region to plot its line
@@ -79,8 +80,7 @@ ax.set_xlabel('Month', fontsize=12)
 ax.set_ylabel('Revenue (USD)', fontsize=12)
 ax.set_title('Revenue by Month and Region', fontsize=14)
 ax.set_xticklabels(month_order, rotation=45, fontsize=10)
-ax.set_yticklabels(fontsize=10)
-ax.legend(title='Region', bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
+ax.tick_params(axis='y', labelsize=10)  # Updated line
 
 # Adding tight layout for better spacing
 plt.tight_layout()
