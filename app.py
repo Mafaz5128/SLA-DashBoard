@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Load the data
 df = pd.read_excel("Stationary_Perf.xlsx")
@@ -49,13 +50,13 @@ st.subheader("Total Revenue Trend by Month")
 melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'],  # Removed 'TGT-USD'
                              var_name='Revenue Type', value_name='Revenue (USD)')
 
-# Group by Month and Revenue Type to calculate average revenue
+# Group by Month and Revenue Type to calculate total revenue
 avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].sum().reset_index()
 
 # Ensure month ordering is reflected in the plot
 avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=month_order, ordered=True)
 
-# Plot the chart with average revenue
+# Plot the chart with total revenue
 fig = px.line(
     avg_revenue_df,
     x='Month',
@@ -72,8 +73,37 @@ fig.for_each_trace(
     )
 )
 
-fig.update_layout(xaxis_title="Month", yaxis_title="Average Revenue (USD)")
-st.plotly_chart(fig)
+fig.update_layout(xaxis_title="Month", yaxis_title="Total Revenue (USD)")
+
+# Side-by-side graphs
+col1, col2 = st.columns(2)
+
+# First graph: Overall Revenue Trend
+col1.plotly_chart(fig, use_container_width=True)
+
+# Second graph: Revenue by Month (Actual vs Target)
+act_avg = df.groupby('Month')['ACT -USD'].sum()
+act_tg = df.groupby('Month')[' TGT-USD'].mean()
+
+# Ensure proper month ordering
+act_avg = act_avg.reindex(month_order)
+act_tg = act_tg.reindex(month_order)
+
+# Creating the second graph with Plotly
+fig_target = go.Figure()
+fig_target.add_trace(go.Scatter(x=act_avg.index, y=act_avg, mode='lines+markers', name='Actual Revenue', marker=dict(symbol='circle')))
+fig_target.add_trace(go.Scatter(x=act_tg.index, y=act_tg, mode='lines+markers', name='Actual Target', marker=dict(symbol='square')))
+
+fig_target.update_layout(
+    title="Revenue by Month (Actual vs Target)",
+    xaxis_title="Month",
+    yaxis_title="Revenue (USD)",
+    legend_title="Legend",
+    xaxis=dict(tickangle=45)
+)
+
+# Display the second graph in the second column
+col2.plotly_chart(fig_target, use_container_width=True)
 
 # Additional Graphs with Separate Filters
 # Filtered Data based on additional filters
