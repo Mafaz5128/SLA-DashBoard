@@ -202,13 +202,17 @@ selected_pos = st.selectbox("Select POS", options=["All"] + list(sorted(pos_opti
 # Matplotlib Plot: Revenue by Month and Region
 st.subheader("Revenue by Month and Region")
 
-# Grouping the data by Month and Region
-act_avg_region = df.groupby(['Month', 'Region'])['ACT -USD'].mean().reset_index()
+# Filter the data based on selected Region and POS
+if selected_region_filter != "All":
+    filtered_df = df[df['Region'] == selected_region_filter]
+else:
+    filtered_df = df
 
-# Defining the order of months for consistent plotting
-month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November']
-act_avg_region['Month'] = pd.Categorical(act_avg_region['Month'], categories=month_order, ordered=True)
-act_avg_region = act_avg_region.sort_values('Month')
+if selected_pos != "All":
+    filtered_df = filtered_df[filtered_df['POINT OF SALE'] == selected_pos]
+
+# Grouping the filtered data by Month and Region
+act_avg_region = filtered_df.groupby(['Month', 'Region'])['ACT -USD'].mean().reset_index()
 
 # Setting the color palette
 palette = sns.color_palette("husl", len(act_avg_region['Region'].unique()))
