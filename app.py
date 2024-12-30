@@ -53,7 +53,7 @@ st.subheader("ACTUAL vs TARGET Revenue Trend")
 st.pyplot(fig)
 
 # Grouping the data by Month and Region for the third graph
-act_avg_region = df.groupby(['Month', 'Region'])['ACT -USD'].mean().reset_index()
+act_avg_region = df.groupby(['Month', 'Region'])['ACT -USD'].sum().reset_index()
 
 # Defining the order of months for consistent plotting
 act_avg_region['Month'] = pd.Categorical(act_avg_region['Month'], categories=month_order, ordered=True)
