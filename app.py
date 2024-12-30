@@ -43,7 +43,7 @@ def filter_df(df, pos=None, month=None):
         filtered_df = filtered_df[filtered_df['Month'] == month]
     return filtered_df
 
-# Filtered Data based on main filters (Month)
+# Filtered Data based on selected month filter (only for Overall Revenue Trend chart)
 filtered_df = filter_df(df, None, selected_month)
 
 # Overall Revenue Trend Chart (Average Revenue by Type)
@@ -63,6 +63,15 @@ fig = px.line(
     title="Overall Average Revenue Trend by Month",
     markers=True
 )
+
+# Customizing the legend labels
+fig.update_traces(
+    name="ACT -USD - Actual Revenue", selector=dict(name="ACT -USD")
+)
+fig.update_traces(
+    name="LYR-USD (2023/24) - Last Year Revenue", selector=dict(name="LYR-USD (2023/24)")
+)
+
 fig.update_layout(xaxis_title="Month", yaxis_title="Average Revenue (USD)")
 st.plotly_chart(fig)
 
