@@ -20,7 +20,7 @@ default_region = df['Region'].unique()[0] if len(df['Region'].unique()) > 0 else
 default_month = 'April'  # Default month is set to 'April'
 
 # Streamlit UI
-st.title("Revenue Analysis Dashboard")
+st.title("Station Revenue Analytics")
 
 # Filters
 st.sidebar.header("Filters")
@@ -44,7 +44,7 @@ filtered_df = filter_df(df, selected_pos, selected_region, selected_month)
 
 # Overall Revenue Trend Chart
 st.subheader("Overall Revenue Trend")
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'],
+melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
                              var_name='Revenue Type', value_name='Revenue (USD)')
 fig = px.line(
     melted_df,
@@ -73,7 +73,7 @@ st.plotly_chart(fig)
 
 # Specific Revenue Trend Chart
 st.subheader("Specific Revenue Trend")
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'],
+melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
                              var_name='Revenue Type', value_name='Revenue (USD)')
 fig = px.line(
     melted_df,
