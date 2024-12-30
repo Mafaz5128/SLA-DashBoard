@@ -137,17 +137,19 @@ st.plotly_chart(fig_contribution_region, use_container_width=True)
 st.markdown("""
     <style>
     /* Apply background color to the entire dashboard */
-    .main {
+    .block-container {
         background-color: #f4f8fb;  /* Light blue background */
     }
 
+    /* Apply background color to the filter widgets */
     .stSelectbox, .stMarkdown, .stRadio, .stButton {
-        background-color: #f4f8fb; 
+        background-color: #e8f0fe;
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    /* Customizing filter text and dropdown */
     .stSelectbox select {
         font-size: 16px;
         color: #333;
@@ -158,16 +160,11 @@ st.markdown("""
         font-weight: bold;
     }
 
-    .stMarkdown {
-        background-color: #e8f0fe;
-        border: 1px solid #d0e7fe;
-    }
-
     .stButton {
         background-color: #66b3ff;
         color: white;
     }
-    
+
     .stButton:hover {
         background-color: #0059b3;
     }
