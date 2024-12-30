@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 df = pd.read_excel("Stationary_Perf.xlsx")
 
 # Streamlit UI
-st.set_page_config(page_title="Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
+st.set_page_config(page_title="Station Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
 st.title("Revenue Analysis Dashboard")
 
 # Set the month order explicitly
