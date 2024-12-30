@@ -218,3 +218,11 @@ plt.xlabel('Month', fontsize=12)
 plt.ylabel('Revenue (USD)', fontsize=12)
 plt.title('Revenue by Month and Region', fontsize=14)
 plt.xticks(rotation=45, fontsize=10)
+plt.yticks(fontsize=10)
+plt.legend(title='Region', bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
+
+# Adding tight layout for better spacing
+plt.tight_layout()
+
+# Display the plot in Streamlit
+st.pyplot(plt)
