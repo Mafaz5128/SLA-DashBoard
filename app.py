@@ -9,17 +9,13 @@ df = pd.read_excel("Stationary_Perf.xlsx")
 st.set_page_config(page_title="Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
 st.title("Revenue Analysis Dashboard")
 
-# Sidebar for filters (Only Month and Region)
+# Sidebar for filters (Only Month)
 st.sidebar.header("Filters")
 
-# Add "Select All" option for Month and Region
+# Add "Select All" option for Month
 selected_month = st.sidebar.selectbox(
     "Select Month", 
     options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], index=0
-)
-selected_region = st.sidebar.selectbox(
-    "Select Region", 
-    options=["All"] + list(sorted(df['Region'].unique())), index=0
 )
 
 # Additional filters for separate graphs (Including POS)
@@ -39,32 +35,35 @@ selected_region_filter = st.sidebar.selectbox(
 )
 
 # Function to filter dataframe based on selected filters
-def filter_df(df, pos=None, region=None, month=None):
+def filter_df(df, pos=None, month=None):
     filtered_df = df.copy()
     if pos and pos != "All":
         filtered_df = filtered_df[filtered_df['POINT OF SALE'] == pos]
-    if region and region != "All":
-        filtered_df = filtered_df[filtered_df['Region'] == region]
     if month and month != "All":
         filtered_df = filtered_df[filtered_df['Month'] == month]
     return filtered_df
 
-# Filtered Data based on main filters (Month and Region)
-filtered_df = filter_df(df, None, selected_region, selected_month)
+# Filtered Data based on main filters (Month)
+filtered_df = filter_df(df, None, selected_month)
 
-# Overall Revenue Trend Chart
+# Overall Revenue Trend Chart (Average Revenue by Type)
 st.subheader("Overall Revenue Trend")
 melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'],
                              var_name='Revenue Type', value_name='Revenue (USD)')
+
+# Group by Month and Revenue Type to calculate average revenue
+avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].mean().reset_index()
+
+# Plot the chart with average revenue
 fig = px.line(
-    melted_df,
+    avg_revenue_df,
     x='Month',
     y='Revenue (USD)',
     color='Revenue Type',
-    title="Overall Revenue Trend by Month",
+    title="Overall Average Revenue Trend by Month",
     markers=True
 )
-fig.update_layout(xaxis_title="Month", yaxis_title="Revenue (USD)")
+fig.update_layout(xaxis_title="Month", yaxis_title="Average Revenue (USD)")
 st.plotly_chart(fig)
 
 # Overall Exchange Rate Gain/Loss Chart
@@ -110,8 +109,8 @@ fig = px.bar(
 fig.update_layout(xaxis_title="Month", yaxis_title="Gain/Loss (USD)")
 st.plotly_chart(fig)
 
-# Filtered Data based on additional filters (Month and Region for separate graphs, POS for individual POS graphs)
-filtered_df_separate = filter_df(df, selected_pos, selected_region_filter, selected_month_filter)
+# Filtered Data based on additional filters (POS, Month, Region for separate graphs)
+filtered_df_separate = filter_df(df, selected_pos, selected_month_filter)
 
 # Separate graphs for filtered data by month
 st.subheader("Separate Revenue Trend by Month")
