@@ -10,45 +10,14 @@ df = pd.read_excel("Stationary_Perf.xlsx")
 st.set_page_config(page_title="Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
 st.title("Revenue Analysis Dashboard")
 
-# Sidebar for filters (Only POS)
-st.sidebar.header("Filters")
-selected_pos = st.sidebar.selectbox(
-    "Select POS", 
-    options=["All"] + list(sorted(df['POINT OF SALE'].unique())), 
-    index=0
-)
-
-# Additional filters for separate graphs (POS, Month, and Region)
-st.sidebar.header("Additional Filters")
-selected_month_filter = st.sidebar.selectbox(
-    "Select Month for Separate Graph", 
-    options=['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], 
-    index=0
-)
-selected_region_filter = st.sidebar.selectbox(
-    "Select Region for Separate Graph", 
-    options=["All"] + list(sorted(df['Region'].unique())), 
-    index=0
-)
-
-# Function to filter dataframe based on selected filters
-def filter_df(df, pos=None):
-    filtered_df = df.copy()
-    if pos and pos != "All":
-        filtered_df = filtered_df[filtered_df['POINT OF SALE'] == pos]
-    return filtered_df
-
-# Filtered Data based on selected POS filter
-filtered_df = filter_df(df, selected_pos)
-
 # Set the month order explicitly
 month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November']
-filtered_df['Month'] = pd.Categorical(filtered_df['Month'], categories=month_order, ordered=True)
+df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
 # Overall Revenue Trend Chart (Average Revenue by Type)
 st.subheader("Total Revenue Trend by Month")
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'], 
-                             var_name='Revenue Type', value_name='Revenue (USD)')
+melted_df = df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'], 
+                     var_name='Revenue Type', value_name='Revenue (USD)')
 
 # Group by Month and Revenue Type to calculate total revenue
 avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].sum().reset_index()
@@ -163,3 +132,9 @@ fig_contribution_region.update_layout(
 # Displaying the new graph in the dashboard
 st.subheader("Revenue Contribution by Region")
 st.plotly_chart(fig_contribution_region, use_container_width=True)
+
+# Filters Section
+st.subheader("Filters")
+selected_pos = st.selectbox("Select POS", options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0)
+selected_region_filter = st.selectbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
+selected_month_filter = st.selectbox("Select Month", options=month_order, index=0)
