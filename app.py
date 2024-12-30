@@ -105,34 +105,19 @@ fig_target.update_layout(
 # Display the second graph in the second column
 col2.plotly_chart(fig_target, use_container_width=True)
 
-# Additional Graphs with Separate Filters
-# Filtered Data based on additional filters
-filtered_df_separate = filtered_df.copy()
-if selected_month_filter != "All":
-    filtered_df_separate = filtered_df_separate[filtered_df_separate['Month'] == selected_month_filter]
-if selected_region_filter != "All":
-    filtered_df_separate = filtered_df_separate[filtered_df_separate['Region'] == selected_region_filter]
+# Third graph: Exchange Rate Gain/Loss by Month
+st.subheader("Exchange Rate Gain/Loss by Month")
+exloss_avg = df.groupby('Month')['Exchange - gain/( loss)'].sum()
+exloss_avg_ly = df.groupby('Month')['Exchange  -gain/(loss)'].sum()
 
-# Revenue Trend for Separate Filters
-st.subheader("Separate Revenue Trend by Filters")
-melted_df_separate = filtered_df_separate.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'],
-                                               var_name='Revenue Type', value_name='Revenue (USD)')
+# Ensure proper month ordering
+exloss_avg = exloss_avg.reindex(month_order)
+exloss_avg_ly = exloss_avg_ly.reindex(month_order)
 
-fig_separate = px.line(
-    melted_df_separate,
-    x='Month',
-    y='Revenue (USD)',
-    color='Revenue Type',
-    title="Revenue Trend by Filters",
-    markers=True
-)
+# Creating the third graph with Plotly
+fig_exloss = go.Figure()
+fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='ExgRate - Gain/Loss (Current)', marker=dict(symbol='circle')))
+fig_exloss.add_trace(go.Scatter(x=exloss_avg_ly.index, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - Gain/Loss (Last Year)', marker=dict(symbol='square')))
 
-# Customizing the legend labels
-fig_separate.for_each_trace(
-    lambda t: t.update(
-        name="Actual Revenue" if t.name == "ACT -USD" else "Last Year Revenue" if t.name == "LYR-USD (2023/24)" else t.name
-    )
-)
-
-fig_separate.update_layout(xaxis_title="Month", yaxis_title="Revenue (USD)")
-st.plotly_chart(fig_separate)
+# Adding a line at 0 for reference
+fig_exloss.add_trace(go.Scatter(x=exloss_avg.index,
