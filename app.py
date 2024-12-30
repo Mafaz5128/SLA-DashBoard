@@ -1,9 +1,8 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns  # For color palettes
 import plotly.express as px
 import plotly.graph_objects as go
+import seaborn as sns
 
 # Load the data
 df = pd.read_excel("Stationary_Perf.xlsx")
@@ -151,6 +150,42 @@ fig_exloss.update_layout(
 )
 
 col4.plotly_chart(fig_exloss, use_container_width=True)
+
+# Fifth graph: Revenue Contribution Percentage by Region (Actual and LY)
+con_act_avg_region = filtered_df.groupby('Region')['REVENUE CONT. % - Actual'].mean()
+con_ly_avg_region = filtered_df.groupby('Region')['REVENUE CONT. %-LYR'].mean()
+
+# Create the line plot for Revenue Contribution Percentage by Region
+fig_contribution_region = go.Figure()
+
+# Actual Revenue Contribution by Region
+fig_contribution_region.add_trace(go.Scatter(
+    x=con_act_avg_region.index, 
+    y=con_act_avg_region, 
+    mode='lines+markers', 
+    name='Contribution - Actual', 
+    marker=dict(symbol='circle', color='#00CC96')
+))
+
+# Last Year Revenue Contribution by Region
+fig_contribution_region.add_trace(go.Scatter(
+    x=con_ly_avg_region.index, 
+    y=con_ly_avg_region, 
+    mode='lines+markers', 
+    name='Contribution - Last Year', 
+    marker=dict(symbol='square', color='#636EFA')
+))
+
+fig_contribution_region.update_layout(
+    title="Revenue Contribution by Region (Actual vs Last Year)",
+    xaxis_title="Region",
+    yaxis_title="Contribution (%)",
+    legend_title="Legend",
+    xaxis=dict(tickangle=45)
+)
+
+# Display the contribution percentage graph
+st.plotly_chart(fig_contribution_region, use_container_width=True)
 
 # Adding custom CSS styles for the dashboard and filters
 st.markdown("""
