@@ -211,7 +211,7 @@ else:
 if selected_pos != "All":
     filtered_df = filtered_df[filtered_df['POINT OF SALE'] == selected_pos]
 
-# Grouping the filtered data by Month and Region
+# Grouping the filtered data by Month and Region and calculating mean revenue
 act_avg_region = filtered_df.groupby(['Month', 'Region'])['ACT -USD'].mean().reset_index()
 
 # Setting the color palette
