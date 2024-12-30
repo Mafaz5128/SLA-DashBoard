@@ -82,7 +82,7 @@ col1, col2 = st.columns(2)
 col1.plotly_chart(fig, use_container_width=True)
 
 # Second graph: Revenue by Month (Actual vs Target)
-act_avg = df.groupby('Month')['ACT -USD'].sum()
+act_avg = df.groupby('Month')['ACT -USD'].mean()
 act_tg = df.groupby('Month')[' TGT-USD'].mean()
 
 # Ensure proper month ordering
@@ -95,9 +95,9 @@ fig_target.add_trace(go.Scatter(x=act_avg.index, y=act_avg, mode='lines+markers'
 fig_target.add_trace(go.Scatter(x=act_tg.index, y=act_tg, mode='lines+markers', name='Actual Target', marker=dict(symbol='square')))
 
 fig_target.update_layout(
-    title="Revenue by Month (Actual vs Target)",
+    title="Average Revenue by Month (Actual vs Target)",
     xaxis_title="Month",
-    yaxis_title="Revenue (USD)",
+    yaxis_title="Average Revenue (USD)",
     legend_title="Legend",
     xaxis=dict(tickangle=45)
 )
