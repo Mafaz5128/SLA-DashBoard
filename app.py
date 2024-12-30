@@ -11,23 +11,41 @@ st.title("Revenue Analysis Dashboard")
 
 # Sidebar for filters
 st.sidebar.header("Filters")
-selected_pos = st.sidebar.selectbox("Select POS", options=[None] + list(sorted(df['POINT OF SALE'].unique())), index=0)
-selected_region = st.sidebar.selectbox("Select Region", options=[None] + list(sorted(df['Region'].unique())), index=0)
-selected_month = st.sidebar.selectbox("Select Month", options=['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], index=0)
+
+# Add "Select All" option for POS, Region, and Month
+selected_pos = st.sidebar.selectbox(
+    "Select POS", 
+    options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0
+)
+selected_region = st.sidebar.selectbox(
+    "Select Region", 
+    options=["All"] + list(sorted(df['Region'].unique())), index=0
+)
+selected_month = st.sidebar.selectbox(
+    "Select Month", 
+    options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], index=0
+)
 
 # Additional filters for separate graphs
 st.sidebar.header("Additional Filters")
-selected_month_filter = st.sidebar.selectbox("Select Month for Separate Graph", options=['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], index=0)
-selected_region_filter = st.sidebar.selectbox("Select Region for Separate Graph", options=[None] + list(sorted(df['Region'].unique())), index=0)
+selected_month_filter = st.sidebar.selectbox(
+    "Select Month for Separate Graph", 
+    options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], 
+    index=0
+)
+selected_region_filter = st.sidebar.selectbox(
+    "Select Region for Separate Graph", 
+    options=["All"] + list(sorted(df['Region'].unique())), index=0
+)
 
 # Function to filter dataframe based on selected filters
 def filter_df(df, pos=None, region=None, month=None):
     filtered_df = df.copy()
-    if pos:
+    if pos and pos != "All":
         filtered_df = filtered_df[filtered_df['POINT OF SALE'] == pos]
-    if region:
+    if region and region != "All":
         filtered_df = filtered_df[filtered_df['Region'] == region]
-    if month:
+    if month and month != "All":
         filtered_df = filtered_df[filtered_df['Month'] == month]
     return filtered_df
 
@@ -124,4 +142,3 @@ fig_region = px.line(
 )
 fig_region.update_layout(xaxis_title="Region", yaxis_title="Revenue (USD)")
 st.plotly_chart(fig_region)
-
