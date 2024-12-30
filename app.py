@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns  # For color palettes
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -184,4 +186,35 @@ st.markdown("""
 st.subheader("Filters")
 selected_pos = st.selectbox("Select POS", options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0)
 selected_region_filter = st.selectbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
-selected_month_filter = st.selectbox("Select Month", options=month_order, index=0)
+
+# Matplotlib Plot: Revenue by Month and Region
+st.subheader("Revenue by Month and Region")
+
+# Grouping the data by Month and Region
+act_avg_region = df.groupby(['Month', 'Region'])['ACT -USD'].mean().reset_index()
+
+# Defining the order of months for consistent plotting
+month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November']
+act_avg_region['Month'] = pd.Categorical(act_avg_region['Month'], categories=month_order, ordered=True)
+act_avg_region = act_avg_region.sort_values('Month')
+
+# Setting the color palette
+palette = sns.color_palette("husl", len(act_avg_region['Region'].unique()))
+
+# Creating the plot
+plt.figure(figsize=(14, 8))
+
+# Looping through each region to plot its line
+for i, region in enumerate(act_avg_region['Region'].unique()):
+    region_data = act_avg_region[act_avg_region['Region'] == region]
+    plt.plot(region_data['Month'], region_data['ACT -USD'],
+             marker='o', linestyle='-', color=palette[i], label=region)
+
+# Adding gridlines
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+
+# Adding labels, title, and legend
+plt.xlabel('Month', fontsize=12)
+plt.ylabel('Revenue (USD)', fontsize=12)
+plt.title('Revenue by Month and Region', fontsize=14)
+plt.xticks(rotation=45, fontsize=10)
