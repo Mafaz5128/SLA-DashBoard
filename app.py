@@ -1,10 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import inspect
-import textwrap
-from demo_echarts import ST_DEMOS
-from demo_pyecharts import ST_PY_DEMOS
+from st_echarts import st_echarts  # Correct import for Streamlit ECharts
 
 # Load the data
 df = pd.read_excel("C:/Users/mafaz/OneDrive/Desktop/SriLankan Airlines/Station data/Stationary_Perf.xlsx")
@@ -159,8 +156,8 @@ def main():
         if selected_api == "echarts":
             st.caption(
                 """ECharts demos are extracted from https://echarts.apache.org/examples/en/index.html, 
-            by copying/formattting the 'option' json object into st_echarts.
-            Definitely check the echarts example page, convert the JSON specs to Python Dicts and you should get a nice viz."""
+            by copying/formatting the 'option' JSON object into st_echarts.
+            Definitely check the ECharts example page, convert the JSON specs to Python Dicts, and you should get a nice viz."""
             )
         if selected_api == "pyecharts":
             st.caption(
