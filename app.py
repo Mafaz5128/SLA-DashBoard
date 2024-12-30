@@ -12,7 +12,7 @@ import pandas as pd
 import plotly.express as px
 
 # Load the data
-df = pd.read_excel("C:/Users/mafaz/OneDrive/Desktop/SriLankan Airlines/Station data/Stationary_Perf.xlsx")
+df = pd.read_excel("https://github.com/Mafaz/SLA-DashBoard/raw/main/Stationary_Perf.xlsx")
 
 # Get default values for dropdowns
 default_pos = df['POINT OF SALE'].unique()[0] if len(df['POINT OF SALE'].unique()) > 0 else None
