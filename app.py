@@ -9,24 +9,20 @@ df = pd.read_excel("Stationary_Perf.xlsx")
 st.set_page_config(page_title="Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
 st.title("Revenue Analysis Dashboard")
 
-# Sidebar for filters (Only Month)
+# Sidebar for filters (Only POS and Region)
 st.sidebar.header("Filters")
 
-# Add "Select All" option for Month
-selected_month = st.sidebar.selectbox(
-    "Select Month", 
-    options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], index=0
-)
-
-# Additional filters for separate graphs (Including POS)
-st.sidebar.header("Additional Filters")
+# Add "Select All" option for POS
 selected_pos = st.sidebar.selectbox(
     "Select POS", 
     options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0
 )
+
+# Additional filters for separate graphs (Including Month and Region for separate graphs)
+st.sidebar.header("Additional Filters")
 selected_month_filter = st.sidebar.selectbox(
     "Select Month for Separate Graph", 
-    options=["All"] + ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'], 
+    options=['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], 
     index=0
 )
 selected_region_filter = st.sidebar.selectbox(
@@ -39,12 +35,14 @@ def filter_df(df, pos=None, month=None):
     filtered_df = df.copy()
     if pos and pos != "All":
         filtered_df = filtered_df[filtered_df['POINT OF SALE'] == pos]
-    if month and month != "All":
-        filtered_df = filtered_df[filtered_df['Month'] == month]
     return filtered_df
 
-# Filtered Data based on selected month filter (only for Overall Revenue Trend chart)
-filtered_df = filter_df(df, None, selected_month)
+# Filtered Data based on selected POS filter
+filtered_df = filter_df(df, selected_pos)
+
+# Set the month order explicitly
+month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
 # Overall Revenue Trend Chart (Average Revenue by Type)
 st.subheader("Overall Revenue Trend")
@@ -66,10 +64,10 @@ fig = px.line(
 
 # Customizing the legend labels
 fig.update_traces(
-    name="Actual Revenue", selector=dict(name="ACT -USD")
+    name="ACT -USD - Actual Revenue", selector=dict(name="ACT -USD")
 )
 fig.update_traces(
-    name="Last Year Revenue", selector=dict(name="LYR-USD (2023/24)")
+    name="LYR-USD (2023/24) - Last Year Revenue", selector=dict(name="LYR-USD (2023/24)")
 )
 
 fig.update_layout(xaxis_title="Month", yaxis_title="Average Revenue (USD)")
@@ -119,7 +117,7 @@ fig.update_layout(xaxis_title="Month", yaxis_title="Gain/Loss (USD)")
 st.plotly_chart(fig)
 
 # Filtered Data based on additional filters (POS, Month, Region for separate graphs)
-filtered_df_separate = filter_df(df, selected_pos, selected_month_filter)
+filtered_df_separate = filter_df(df, selected_pos)
 
 # Separate graphs for filtered data by month
 st.subheader("Separate Revenue Trend by Month")
