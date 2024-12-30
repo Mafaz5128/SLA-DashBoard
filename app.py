@@ -184,8 +184,18 @@ st.markdown("""
 
 # Filters Section
 st.subheader("Filters")
-selected_pos = st.selectbox("Select POS", options=["All"] + list(sorted(df['POINT OF SALE'].unique())), index=0)
 selected_region_filter = st.selectbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
+
+# Filter POS by Region: Based on the region selected, show corresponding POS
+if selected_region_filter != "All":
+    # Filter the POS options by the selected region
+    pos_options = df[df['Region'] == selected_region_filter]['POINT OF SALE'].unique()
+else:
+    # If "All" is selected, show all POS options
+    pos_options = df['POINT OF SALE'].unique()
+
+# POS filter for the selected region
+selected_pos = st.selectbox("Select POS", options=["All"] + list(sorted(pos_options)), index=0)
 
 # Matplotlib Plot: Revenue by Month and Region
 st.subheader("Revenue by Month and Region")
