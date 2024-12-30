@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 # Load data
 df = pd.read_excel("Stationary_Perf.xlsx")
@@ -23,73 +21,82 @@ exrate_avg = exrate_avg.reindex(month_order)
 exloss_avg = exloss_avg.reindex(month_order)
 exloss_avg_ly = exloss_avg_ly.reindex(month_order)
 
-# Streamlit App Layout
+# Streamlit Layout
 st.title("Station Revenue Analytics")
 
-# Revenue Trend by Month (ACTUAL vs LAST YEAR)
-st.subheader("ACTUAL vs LAST YEAR Revenue Trend")
-fig1 = go.Figure()
-
-# Adding Actual and Last Year data
-fig1.add_trace(go.Scatter(x=month_order, y=act_avg, mode='lines+markers', name='ACTUAL', line=dict(color='blue')))
-fig1.add_trace(go.Scatter(x=month_order, y=lyr_avg, mode='lines+markers', name='LAST YEAR (2023/24)', line=dict(color='green')))
-
-fig1.update_layout(
-    title='ACTUAL vs LAST YEAR Revenue Trend',
-    xaxis_title='Month',
-    yaxis_title='Revenue (USD)',
-    xaxis=dict(tickmode='array', tickvals=month_order),
-    template='plotly_dark'
+# Adding a dropdown to choose between ACTUAL, LAST YEAR, and TARGET data
+chart_type = st.selectbox(
+    "Choose the Chart Type",
+    ["Revenue Trend (ACTUAL vs LAST YEAR)", "Revenue Trend (ACTUAL vs TARGET)", "Exchange Rate Trend", "Exchange Rate Gain/Loss"]
 )
-st.plotly_chart(fig1)
+
+# Revenue Trend by Month (ACTUAL vs LAST YEAR)
+if chart_type == "Revenue Trend (ACTUAL vs LAST YEAR)":
+    st.subheader("Revenue Trend by Month (ACTUAL vs LAST YEAR)")
+    fig1 = go.Figure()
+
+    # Adding Actual and Last Year data
+    fig1.add_trace(go.Scatter(x=month_order, y=act_avg, mode='lines+markers', name='ACTUAL', line=dict(color='blue')))
+    fig1.add_trace(go.Scatter(x=month_order, y=lyr_avg, mode='lines+markers', name='LAST YEAR (2023/24)', line=dict(color='green')))
+
+    fig1.update_layout(
+        title='ACTUAL vs LAST YEAR Revenue Trend',
+        xaxis_title='Month',
+        yaxis_title='Revenue (USD)',
+        xaxis=dict(tickmode='array', tickvals=month_order),
+        template='plotly_dark'
+    )
+    st.plotly_chart(fig1)
 
 # Revenue Trend by Month (ACTUAL vs TARGET)
-st.subheader("ACTUAL vs TARGET Revenue Trend")
-fig2 = go.Figure()
+elif chart_type == "Revenue Trend (ACTUAL vs TARGET)":
+    st.subheader("Revenue Trend by Month (ACTUAL vs TARGET)")
+    fig2 = go.Figure()
 
-# Adding Actual and Target data
-fig2.add_trace(go.Scatter(x=month_order, y=act_avg, mode='lines+markers', name='ACTUAL', line=dict(color='blue')))
-fig2.add_trace(go.Scatter(x=month_order, y=act_tg, mode='lines+markers', name='TARGET', line=dict(color='red')))
+    # Adding Actual and Target data
+    fig2.add_trace(go.Scatter(x=month_order, y=act_avg, mode='lines+markers', name='ACTUAL', line=dict(color='blue')))
+    fig2.add_trace(go.Scatter(x=month_order, y=act_tg, mode='lines+markers', name='TARGET', line=dict(color='red')))
 
-fig2.update_layout(
-    title='ACTUAL vs TARGET Revenue Trend',
-    xaxis_title='Month',
-    yaxis_title='Revenue (USD)',
-    xaxis=dict(tickmode='array', tickvals=month_order),
-    template='plotly_dark'
-)
-st.plotly_chart(fig2)
+    fig2.update_layout(
+        title='ACTUAL vs TARGET Revenue Trend',
+        xaxis_title='Month',
+        yaxis_title='Revenue (USD)',
+        xaxis=dict(tickmode='array', tickvals=month_order),
+        template='plotly_dark'
+    )
+    st.plotly_chart(fig2)
 
 # Average Exchange Rate by Month
-st.subheader("Average Exchange Rate by Month")
-fig3 = go.Figure()
+elif chart_type == "Exchange Rate Trend":
+    st.subheader("Average Exchange Rate by Month")
+    fig3 = go.Figure()
 
-# Adding Average Exchange Rate data
-fig3.add_trace(go.Scatter(x=month_order, y=exrate_avg, mode='lines+markers', name='Average Exchange Rate', line=dict(color='purple')))
+    # Adding Average Exchange Rate data
+    fig3.add_trace(go.Scatter(x=month_order, y=exrate_avg, mode='lines+markers', name='Average Exchange Rate', line=dict(color='purple')))
 
-fig3.update_layout(
-    title='Average Exchange Rate Trend',
-    xaxis_title='Month',
-    yaxis_title='Exchange Rate',
-    xaxis=dict(tickmode='array', tickvals=month_order),
-    template='plotly_dark'
-)
-st.plotly_chart(fig3)
+    fig3.update_layout(
+        title='Average Exchange Rate Trend',
+        xaxis_title='Month',
+        yaxis_title='Exchange Rate',
+        xaxis=dict(tickmode='array', tickvals=month_order),
+        template='plotly_dark'
+    )
+    st.plotly_chart(fig3)
 
 # Exchange Rate Gain/Loss by Month (Current Year vs Last Year)
-st.subheader("Exchange Rate Gain/Loss by Month (Current Year vs Last Year)")
-fig4 = go.Figure()
+elif chart_type == "Exchange Rate Gain/Loss":
+    st.subheader("Exchange Rate Gain/Loss by Month (Current Year vs Last Year)")
+    fig4 = go.Figure()
 
-# Adding Gain/Loss data
-fig4.add_trace(go.Scatter(x=month_order, y=exloss_avg, mode='lines+markers', name='ExgRate - gain/Loss', line=dict(color='orange')))
-fig4.add_trace(go.Scatter(x=month_order, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - gain/loss (LY)', line=dict(color='cyan')))
+    # Adding Gain/Loss data
+    fig4.add_trace(go.Scatter(x=month_order, y=exloss_avg, mode='lines+markers', name='ExgRate - gain/Loss', line=dict(color='orange')))
+    fig4.add_trace(go.Scatter(x=month_order, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - gain/loss (LY)', line=dict(color='cyan')))
 
-fig4.update_layout(
-    title='ExgRate Gain/Loss by Month',
-    xaxis_title='Month',
-    yaxis_title='Gain/Loss (USD)',
-    xaxis=dict(tickmode='array', tickvals=month_order),
-    template='plotly_dark'
-)
-st.plotly_chart(fig4)
-
+    fig4.update_layout(
+        title='ExgRate Gain/Loss by Month',
+        xaxis_title='Month',
+        yaxis_title='Gain/Loss (USD)',
+        xaxis=dict(tickmode='array', tickvals=month_order),
+        template='plotly_dark'
+    )
+    st.plotly_chart(fig4)
