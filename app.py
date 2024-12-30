@@ -66,10 +66,10 @@ fig = px.line(
 
 # Customizing the legend labels
 fig.update_traces(
-    name="ACT -USD - Actual Revenue", selector=dict(name="ACT -USD")
+    name="Actual Revenue", selector=dict(name="ACT -USD")
 )
 fig.update_traces(
-    name="LYR-USD (2023/24) - Last Year Revenue", selector=dict(name="LYR-USD (2023/24)")
+    name="Last Year Revenue", selector=dict(name="LYR-USD (2023/24)")
 )
 
 fig.update_layout(xaxis_title="Month", yaxis_title="Average Revenue (USD)")
