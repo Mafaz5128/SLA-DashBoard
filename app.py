@@ -47,7 +47,7 @@ filtered_df['Month'] = pd.Categorical(filtered_df['Month'], categories=month_ord
 
 # Overall Revenue Trend Chart (Average Revenue by Type)
 st.subheader("Total Revenue Trend by Month")
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'],  # Removed 'TGT-USD'
+melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'], 
                              var_name='Revenue Type', value_name='Revenue (USD)')
 
 # Group by Month and Revenue Type to calculate total revenue
@@ -63,8 +63,14 @@ fig = px.line(
     y='Revenue (USD)',
     color='Revenue Type',
     title="Overall Revenue Trend by Month",
-    markers=True,
-    color_discrete_map={"ACT -USD": "#636EFA", "LYR-USD (2023/24)": "#EF553B"}
+    markers=True
+)
+
+# Customizing the legend labels
+fig.for_each_trace(
+    lambda t: t.update(
+        name="Actual Revenue" if t.name == "ACT -USD" else "Last Year Revenue" if t.name == "LYR-USD (2023/24)" else t.name
+    )
 )
 
 fig.update_layout(xaxis_title="Month", yaxis_title="Total Revenue (USD)")
@@ -85,8 +91,8 @@ act_tg = act_tg.reindex(month_order)
 
 # Creating the second graph with Plotly
 fig_target = go.Figure()
-fig_target.add_trace(go.Scatter(x=act_avg.index, y=act_avg, mode='lines+markers', name='Actual Revenue', marker=dict(symbol='circle', color='#FFA15A')))
-fig_target.add_trace(go.Scatter(x=act_tg.index, y=act_tg, mode='lines+markers', name='Actual Target', marker=dict(symbol='square', color='#19D3F3')))
+fig_target.add_trace(go.Scatter(x=act_avg.index, y=act_avg, mode='lines+markers', name='Actual Revenue', marker=dict(symbol='circle', color='#00CC96')))
+fig_target.add_trace(go.Scatter(x=act_tg.index, y=act_tg, mode='lines+markers', name='Actual Target', marker=dict(symbol='square', color='#636EFA')))
 
 fig_target.update_layout(
     title="Average Revenue by Month (Actual vs Target)",
@@ -110,8 +116,8 @@ exloss_avg_ly = exloss_avg_ly.reindex(month_order)
 
 # Creating the third graph with Plotly
 fig_exloss = go.Figure()
-fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='ExgRate - Gain/Loss (Current)', marker=dict(symbol='circle', color='#AB63FA')))
-fig_exloss.add_trace(go.Scatter(x=exloss_avg_ly.index, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - Gain/Loss (Last Year)', marker=dict(symbol='square', color='#FFA15A')))
+fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='ExgRate - Gain/Loss (Current)', marker=dict(symbol='circle', color='#EF553B')))
+fig_exloss.add_trace(go.Scatter(x=exloss_avg_ly.index, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - Gain/Loss (Last Year)', marker=dict(symbol='square', color='#636EFA')))
 fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=[0]*len(exloss_avg), mode='lines', line=dict(color='gray', dash='dash'), name='Zero Line'))
 
 fig_exloss.update_layout(
@@ -122,27 +128,38 @@ fig_exloss.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-# Fourth graph: Revenue Contribution by Month
-con_act_avg = df.groupby('Region')['REVENUE CONT. % - Actual'].mean()
-con_ly_avg_ly = df.groupby('Region')['REVENUE CONT. %-LYR'].mean()
+# Display the third graph
+st.plotly_chart(fig_exloss, use_container_width=True)
 
-# Ensure proper month ordering
-con_act_avg = con_act_avg.reindex(month_order)
-con_ly_avg_ly = con_ly_avg_ly.reindex(month_order)
+# Fourth graph: Revenue Contribution by Region
+con_act_avg_region = df.groupby('Region')['REVENUE CONT. % - Actual'].mean()
+con_ly_avg_region = df.groupby('Region')['REVENUE CONT. %-LYR'].mean()
 
-fig_contribution = go.Figure()
-fig_contribution.add_trace(go.Scatter(x=con_act_avg.index, y=con_act_avg, mode='lines+markers', name='Contribution - Actual', marker=dict(symbol='circle', color='#00CC96')))
-fig_contribution.add_trace(go.Scatter(x=con_ly_avg_ly.index, y=con_ly_avg_ly, mode='lines+markers', name='Contribution - Last Year', marker=dict(symbol='square', color='#636EFA')))
+# Creating the Plotly chart for revenue contribution by Region
+fig_contribution_region = go.Figure()
+fig_contribution_region.add_trace(go.Scatter(
+    x=con_act_avg_region.index, 
+    y=con_act_avg_region, 
+    mode='lines+markers', 
+    name='Contribution - Actual', 
+    marker=dict(symbol='circle', color='#00CC96')
+))
+fig_contribution_region.add_trace(go.Scatter(
+    x=con_ly_avg_region.index, 
+    y=con_ly_avg_region, 
+    mode='lines+markers', 
+    name='Contribution - Last Year', 
+    marker=dict(symbol='square', color='#636EFA')
+))
 
-fig_contribution.update_layout(
-    title="Revenue Contribution by Month",
-    xaxis_title="Month",
+fig_contribution_region.update_layout(
+    title="Revenue Contribution by Region",
+    xaxis_title="Region",
     yaxis_title="Contribution (%)",
     legend_title="Legend",
     xaxis=dict(tickangle=45)
 )
 
-# Side-by-side graphs for the 3rd and 4th graphs
-col3, col4 = st.columns(2)
-col3.plotly_chart(fig_exloss, use_container_width=True)
-col4.plotly_chart(fig_contribution, use_container_width=True)
+# Displaying the new graph in the dashboard
+st.subheader("Revenue Contribution by Region")
+st.plotly_chart(fig_contribution_region, use_container_width=True)
