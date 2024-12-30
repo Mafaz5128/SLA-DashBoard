@@ -63,14 +63,8 @@ fig = px.line(
     y='Revenue (USD)',
     color='Revenue Type',
     title="Overall Revenue Trend by Month",
-    markers=True
-)
-
-# Customizing the legend labels
-fig.for_each_trace(
-    lambda t: t.update(
-        name="Actual Revenue" if t.name == "ACT -USD" else "Last Year Revenue" if t.name == "LYR-USD (2023/24)" else t.name
-    )
+    markers=True,
+    color_discrete_map={"ACT -USD": "#636EFA", "LYR-USD (2023/24)": "#EF553B"}
 )
 
 fig.update_layout(xaxis_title="Month", yaxis_title="Total Revenue (USD)")
@@ -91,8 +85,8 @@ act_tg = act_tg.reindex(month_order)
 
 # Creating the second graph with Plotly
 fig_target = go.Figure()
-fig_target.add_trace(go.Scatter(x=act_avg.index, y=act_avg, mode='lines+markers', name='Actual Revenue', marker=dict(symbol='circle')))
-fig_target.add_trace(go.Scatter(x=act_tg.index, y=act_tg, mode='lines+markers', name='Actual Target', marker=dict(symbol='square')))
+fig_target.add_trace(go.Scatter(x=act_avg.index, y=act_avg, mode='lines+markers', name='Actual Revenue', marker=dict(symbol='circle', color='#FFA15A')))
+fig_target.add_trace(go.Scatter(x=act_tg.index, y=act_tg, mode='lines+markers', name='Actual Target', marker=dict(symbol='square', color='#19D3F3')))
 
 fig_target.update_layout(
     title="Average Revenue by Month (Actual vs Target)",
@@ -116,10 +110,8 @@ exloss_avg_ly = exloss_avg_ly.reindex(month_order)
 
 # Creating the third graph with Plotly
 fig_exloss = go.Figure()
-fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='ExgRate - Gain/Loss (Current)', marker=dict(symbol='circle')))
-fig_exloss.add_trace(go.Scatter(x=exloss_avg_ly.index, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - Gain/Loss (Last Year)', marker=dict(symbol='square')))
-
-# Adding a line at 0 for reference
+fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='ExgRate - Gain/Loss (Current)', marker=dict(symbol='circle', color='#AB63FA')))
+fig_exloss.add_trace(go.Scatter(x=exloss_avg_ly.index, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - Gain/Loss (Last Year)', marker=dict(symbol='square', color='#FFA15A')))
 fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=[0]*len(exloss_avg), mode='lines', line=dict(color='gray', dash='dash'), name='Zero Line'))
 
 fig_exloss.update_layout(
@@ -130,37 +122,27 @@ fig_exloss.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-# Display the third graph
-st.plotly_chart(fig_exloss, use_container_width=True)
+# Fourth graph: Revenue Contribution by Month
+con_act_avg = df.groupby('Month')['REVENUE CONT. % - Actual'].mean()
+con_ly_avg_ly = df.groupby('Month')['REVENUE CONT. %-LYR'].mean()
 
-# Additional Graphs with Separate Filters
-# Filtered Data based on additional filters
-filtered_df_separate = filtered_df.copy()
-if selected_month_filter != "All":
-    filtered_df_separate = filtered_df_separate[filtered_df_separate['Month'] == selected_month_filter]
-if selected_region_filter != "All":
-    filtered_df_separate = filtered_df_separate[filtered_df_separate['Region'] == selected_region_filter]
+# Ensure proper month ordering
+con_act_avg = con_act_avg.reindex(month_order)
+con_ly_avg_ly = con_ly_avg_ly.reindex(month_order)
 
-# Revenue Trend for Separate Filters
-st.subheader("Separate Revenue Trend by Filters")
-melted_df_separate = filtered_df_separate.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'],
-                                               var_name='Revenue Type', value_name='Revenue (USD)')
+fig_contribution = go.Figure()
+fig_contribution.add_trace(go.Scatter(x=con_act_avg.index, y=con_act_avg, mode='lines+markers', name='Contribution - Actual', marker=dict(symbol='circle', color='#00CC96')))
+fig_contribution.add_trace(go.Scatter(x=con_ly_avg_ly.index, y=con_ly_avg_ly, mode='lines+markers', name='Contribution - Last Year', marker=dict(symbol='square', color='#636EFA')))
 
-fig_separate = px.line(
-    melted_df_separate,
-    x='Month',
-    y='Revenue (USD)',
-    color='Revenue Type',
-    title="Revenue Trend by Filters",
-    markers=True
+fig_contribution.update_layout(
+    title="Revenue Contribution by Month",
+    xaxis_title="Month",
+    yaxis_title="Contribution (%)",
+    legend_title="Legend",
+    xaxis=dict(tickangle=45)
 )
 
-# Customizing the legend labels
-fig_separate.for_each_trace(
-    lambda t: t.update(
-        name="Actual Revenue" if t.name == "ACT -USD" else "Last Year Revenue" if t.name == "LYR-USD (2023/24)" else t.name
-    )
-)
-
-fig_separate.update_layout(xaxis_title="Month", yaxis_title="Revenue (USD)")
-st.plotly_chart(fig_separate)
+# Side-by-side graphs for the 3rd and 4th graphs
+col3, col4 = st.columns(2)
+col3.plotly_chart(fig_exloss, use_container_width=True)
+col4.plotly_chart(fig_contribution, use_container_width=True)
