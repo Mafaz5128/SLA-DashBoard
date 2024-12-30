@@ -2,7 +2,6 @@ streamlit==1.23.0
 pandas==1.5.3
 plotly==5.13.1
 openpyxl==3.1.2
-demo_echarts==0.0.1
-demo_pyecharts==0.0.1
-inspect==0.0.1
-textwrap3==0.9.0
+streamlit-echarts==0.0.1  # for ECharts in Streamlit
+pyecharts==1.10.1          # for PyECharts
+
