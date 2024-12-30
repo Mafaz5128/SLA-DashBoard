@@ -45,12 +45,12 @@ month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October',
 filtered_df['Month'] = pd.Categorical(filtered_df['Month'], categories=month_order, ordered=True)
 
 # Overall Revenue Trend Chart (Average Revenue by Type)
-st.subheader("Overall Revenue Trend by Month")
+st.subheader("Total Revenue Trend by Month")
 melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'],  # Removed 'TGT-USD'
                              var_name='Revenue Type', value_name='Revenue (USD)')
 
 # Group by Month and Revenue Type to calculate average revenue
-avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].mean().reset_index()
+avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].sum().reset_index()
 
 # Ensure month ordering is reflected in the plot
 avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=month_order, ordered=True)
@@ -61,7 +61,7 @@ fig = px.line(
     x='Month',
     y='Revenue (USD)',
     color='Revenue Type',
-    title="Overall Average Revenue Trend by Month",
+    title="Overall Revenue Trend by Month",
     markers=True
 )
 
