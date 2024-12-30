@@ -41,7 +41,7 @@ def filter_df(df, pos=None):
 filtered_df = filter_df(df, selected_pos)
 
 # Set the month order explicitly
-month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November']
 filtered_df['Month'] = pd.Categorical(filtered_df['Month'], categories=month_order, ordered=True)
 
 # Overall Revenue Trend Chart (Average Revenue by Type)
