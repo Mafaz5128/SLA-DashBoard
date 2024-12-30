@@ -184,6 +184,8 @@ st.markdown("""
 
 # Filters Section
 st.subheader("Filters")
+
+# Region filter
 selected_region_filter = st.selectbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
 
 # Filter POS by Region: Based on the region selected, show corresponding POS
