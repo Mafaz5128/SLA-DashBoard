@@ -16,28 +16,34 @@ month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October',
 df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
 
-# Region filter
-selected_region_filter = st.sidebar.selectbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
+# Region filter - Change to multiselect
+selected_region_filter = st.sidebar.multiselect(
+    "Select Region", 
+    options=list(sorted(df['Region'].unique())), 
+    default=[df['Region'].unique()[0]]  # Default to the first region
+)
 
-# Filter POS by Region: Based on the region selected, show corresponding POS
-if selected_region_filter != "All":
-    # Filter the POS options by the selected region
-    pos_options = df[df['Region'] == selected_region_filter]['POINT OF SALE'].unique()
+# Filter POS by Region: Based on the selected regions, show corresponding POS
+if selected_region_filter:
+    # Filter the POS options by the selected regions
+    pos_options = df[df['Region'].isin(selected_region_filter)]['POINT OF SALE'].unique()
 else:
-    # If "All" is selected, show all POS options
+    # If no region is selected, show all POS options
     pos_options = df['POINT OF SALE'].unique()
 
-# POS filter for the selected region
-selected_pos = st.sidebar.selectbox("Select POS", options=["All"] + list(sorted(pos_options)), index=0)
+# POS filter for the selected region - Change to multiselect
+selected_pos = st.sidebar.multiselect(
+    "Select POS", 
+    options=["All"] + list(sorted(pos_options)),
+    default=["All"]  # Default to "All"
+)
 
 # Filter the data based on selected Region and POS
-if selected_region_filter != "All":
-    filtered_df = df[df['Region'] == selected_region_filter]
-else:
-    filtered_df = df
+filtered_df = df[df['Region'].isin(selected_region_filter)] if selected_region_filter else df
 
-if selected_pos != "All":
-    filtered_df = filtered_df[filtered_df['POINT OF SALE'] == selected_pos]
+if "All" not in selected_pos:
+    filtered_df = filtered_df[filtered_df['POINT OF SALE'].isin(selected_pos)]
+
 
 # Revenue by Month and Region Section
 st.subheader("Revenue by Month and Region")
