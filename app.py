@@ -87,89 +87,74 @@ fig.update_layout(
 # Display the chart
 st.plotly_chart(fig, use_container_width=True)
 
-import plotly.graph_objects as go
-import seaborn as sns
-import streamlit as st
-
-# Define columns for the grid
+# Create a 2x2 grid of plots
 col1, col2, col3 = st.columns([2, 4, 4])
+col4, col5 = st.columns(2)
+# Pie chart
+# Step 1: Sidebar radio button for month selection (only call once)
+selected_month = col1.radio(
+    "Select a Month:", 
+    sorted(df['Month'].unique())  # Provide sorted list of months
+)
 
-# Create container for the widget with border outline
-with st.container():
-    # Add a common title for the widget
-    st.markdown("""
-    <div style="border: 2px solid #4CAF50; padding: 20px; border-radius: 10px;">
-        <h3 style="text-align: center; color: #4CAF50;">Revenue Contribution Comparison</h3>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Radio button for month selection
-    selected_month = col1.radio(
-        "Select a Month:", 
-        sorted(df['Month'].unique())  # Provide sorted list of months
-    )
+# Step 2: Filter DataFrame for the selected month
+filtered_df_month = df[df['Month'] == selected_month]
 
-    # Filter DataFrame for the selected month
-    filtered_df_month = df[df['Month'] == selected_month]
+# Step 3: Calculate the revenue contribution by region
+# Since percentages are already provided, we sum them directly
 
-    # Calculate the revenue contribution by region
-    revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. % - Actual'].sum()
-    revenue_cont_month_ly = filtered_df_month.groupby('Region')['REVENUE CONT. %-LYR'].sum()
+revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. % - Actual'].sum()
 
-    # Create Pie chart for Actual Revenue Contribution
-    fig_pie = go.Figure(data=[go.Pie(
-        labels=revenue_cont_month.index,  # Use region names as labels
-        values=revenue_cont_month,        # Use the summed percentages as values
-        hoverinfo='label+percent',        # Show label and percentage on hover
-        textinfo='percent',               # Display percentage inside the pie
-        marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex())
-    )])
+# Step 4: Create the Pie chart for actual
+fig_pie = go.Figure(data=[go.Pie(
+    labels=revenue_cont_month.index,  # Use region names as labels
+    values=revenue_cont_month,        # Use the summed percentages as values
+    hoverinfo='label+percent',        # Show label and percentage on hover
+    textinfo='percent',               # Display percentage inside the pie
+    marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex())
+)])
 
-    # Customize layout for Actual Revenue Contribution
-    fig_pie.update_layout(
-        title={
-            'text': f"Actual Revenue Contribution by Region - {selected_month}",
-            'x': 0.5,  # Center the title horizontally
-            'xanchor': 'center',  # Anchor title to the center
-            'font': {'size': 11},  # Reduce title size
-        },
-        margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
-        height=450,  # Increase the height of the pie chart to make it larger
-    )
+# Customize layout for Actual Revenue Contribution
+fig_pie.update_layout(
+    title={
+        'text': f"Actual Revenue Contribution by Region - {selected_month}",
+        'x': 0.5,  # Center the title horizontally
+        'xanchor': 'center',  # Anchor title to the center
+        'font': {'size': 11},  # Reduce title size
+    },
+    margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+    height=450,  # Increase the height of the pie chart to make it larger
+)
 
-    # Create Pie chart for Last Year Revenue Contribution
-    fig_pie2 = go.Figure(data=[go.Pie(
-        labels=revenue_cont_month_ly.index,  # Use region names as labels
-        values=revenue_cont_month_ly,       # Use the summed percentages as values
-        hoverinfo='label+percent',          # Show label and percentage on hover
-        textinfo='percent',                 # Display percentage inside the pie
-        marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month_ly)).as_hex())
-    )])
+# Display pie chart for Actual Revenue Contribution
+st.subheader(f"Revenue Contribution for {selected_month}")
+col2.plotly_chart(fig_pie, use_container_width=True)
 
-    # Customize layout for Last Year Revenue Contribution
-    fig_pie2.update_layout(
-        title={
-            'text': f"Last Revenue Contribution by Region - {selected_month}",
-            'x': 0.5,  # Center the title horizontally
-            'xanchor': 'center',  # Anchor title to the center
-            'font': {'size': 11},  # Reduce title size
-        },
-        margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
-        height=450,  # Increase the height of the pie chart to make it larger
-    )
+#Create the Pie chart for actual
+revenue_cont_month_ly = filtered_df_month.groupby('Region')['REVENUE CONT. %-LYR'].sum()
+fig_pie2 = go.Figure(data=[go.Pie(
+    labels=revenue_cont_month_ly.index,  # Use region names as labels
+    values=revenue_cont_month_ly,        # Use the summed percentages as values
+    hoverinfo='label+percent',        # Show label and percentage on hover
+    textinfo='percent',               # Display percentage inside the pie
+    marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month_ly)).as_hex())  # Seaborn palette
+)])
 
-    # Add a border outline to the container
-    st.markdown("""
-    <div style="border: 2px solid #4CAF50; padding: 20px; border-radius: 10px;">
-    """, unsafe_allow_html=True)
+# Customize layout for Last Year Revenue Contribution
+fig_pie2.update_layout(
+    title={
+        'text': f"Last Revenue Contribution by Region - {selected_month}",
+        'x': 0.5,  # Center the title horizontally
+        'xanchor': 'center',  # Anchor title to the center
+        'font': {'size': 11},  # Reduce title size
+    },
+    margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+    height=450,  # Increase the height of the pie chart to make it larger
+)
 
-    # Display the pie charts in columns inside the container
-    st.subheader(f"Revenue Contribution Comparison for {selected_month}")
-    col2.plotly_chart(fig_pie, use_container_width=True)
-    col3.plotly_chart(fig_pie2, use_container_width=True)
-
-    # End the border outline
-    st.markdown("</div>", unsafe_allow_html=True)
+# Display pie chart for Last Year Revenue Contribution
+st.subheader(f"Last Year Revenue Contribution for {selected_month}")
+col3.plotly_chart(fig_pie2, use_container_width=True).
 
 
 col4 ,col5 = st.columns(2)
