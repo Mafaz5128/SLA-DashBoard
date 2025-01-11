@@ -174,7 +174,6 @@ fig_pie2.update_layout(
 # Display pie chart for Last Year Revenue Contribution
 col3.plotly_chart(fig_pie2, use_container_width=True)
 
-st.plotly_chart(fig_target, use_container_width=True)
 
 # Fourth graph: Exchange Rate Gain/Loss by Month
 exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum()
@@ -197,7 +196,7 @@ fig_exloss.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-col5.plotly_chart(fig_exloss, use_container_width=True)
+st.plotly_chart(fig_exloss, use_container_width=True)
 
 
 # Adding custom CSS styles for the dashboard and filters
