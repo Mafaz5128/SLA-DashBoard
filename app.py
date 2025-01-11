@@ -17,6 +17,7 @@ df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
 
 # Region filter - Change to checkboxes
+tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
 selected_regions = []
 for region in sorted(df['Region'].unique()):
     if st.sidebar.checkbox(region, value=True):  # Set default to True for all regions
@@ -57,7 +58,7 @@ avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].s
 avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=month_order, ordered=True)
 
 # Tabs: Chart and Table
-tab_selection = st.selectbox("Select View", ["Chart", "Table"])
+tab_selection = tab1.selectbox("Select View", ["Chart", "Table"])
 
 if tab_selection == "Chart":
     # Create the line plot
@@ -88,11 +89,11 @@ if tab_selection == "Chart":
     )
 
     # Display the chart
-    st.plotly_chart(fig, use_container_width=True)
+    tab1.plotly_chart(fig, use_container_width=True)
 
 elif tab_selection == "Table":
     # Display the table
-    st.dataframe(avg_revenue_df)
+    tab2.dataframe(avg_revenue_df)
 
 # Create a 2x2 grid of plots
 col1, col2, col3 = st.columns([2, 4, 4])
