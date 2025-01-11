@@ -87,10 +87,6 @@ fig.update_layout(
 # Display the chart
 st.plotly_chart(fig, use_container_width=True)
 
-import plotly.graph_objects as go
-import seaborn as sns
-import streamlit as st
-
 # Define columns for the grid
 col1, col2, col3 = st.columns([2, 4, 4])
 
