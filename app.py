@@ -114,17 +114,26 @@ fig_pie = go.Figure(data=[go.Pie(
     marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex())
 )])
 
-# Customize layout (title centered)
+# Customize layout for Actual Revenue Contribution
 fig_pie.update_layout(
     title={
         'text': f"Actual Revenue Contribution by Region - {selected_month}",
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
+        'font': {'size': 18},  # Reduce title size
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+    legend=dict(
+        orientation="h",  # Horizontal legend
+        yanchor="bottom", # Position legend at the bottom
+        y=-0.2,           # Move legend down
+        xanchor="center", # Center the legend
+        x=0.5             # Center the legend horizontally
+    ),
+    height=450,  # Increase the height of the pie chart to make it larger
 )
 
-# Step 5: Display pie chart in Streamlit
+# Display pie chart for Actual Revenue Contribution
 st.subheader(f"Revenue Contribution for {selected_month}")
 col2.plotly_chart(fig_pie, use_container_width=True)
 
@@ -137,19 +146,29 @@ fig_pie2 = go.Figure(data=[go.Pie(
     textinfo='percent',               # Display percentage inside the pie
     marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month_ly)).as_hex())  # Seaborn palette
 )])
+
+# Customize layout for Last Year Revenue Contribution
 fig_pie2.update_layout(
     title={
         'text': f"Last Revenue Contribution by Region - {selected_month}",
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
+        'font': {'size': 18},  # Reduce title size
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+    legend=dict(
+        orientation="h",  # Horizontal legend
+        yanchor="bottom", # Position legend at the bottom
+        y=-0.2,           # Move legend down
+        xanchor="center", # Center the legend
+        x=0.5             # Center the legend horizontally
+    ),
+    height=450,  # Increase the height of the pie chart to make it larger
 )
 
-# Step 5: Display pie chart in Streamlit
+# Display pie chart for Last Year Revenue Contribution
 st.subheader(f"Last Year Revenue Contribution for {selected_month}")
 col3.plotly_chart(fig_pie2, use_container_width=True)
-
 
 
 # Third graph: Revenue by Month (Actual vs Target)
