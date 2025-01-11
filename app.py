@@ -17,10 +17,19 @@ df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
 
 # Region filter - Change to checkboxes
+# Add 'All' option to the regions
+regions = sorted(df['Region'].unique())
+all_regions_option = ["All"] + regions
+
+# Sidebar checkbox for regions
 selected_regions = []
-for region in sorted(df['Region'].unique()):
-    if st.sidebar.checkbox(region, value=True):  # Set default to True for all regions
-        selected_regions.append(region)
+st.sidebar.write("Select Regions:")
+if st.sidebar.checkbox("All", value=True):  # Default to 'All' checked
+    selected_regions = regions  # Select all regions
+else:
+    for region in regions:
+        if st.sidebar.checkbox(region):  # Default unchecked for individual regions
+            selected_regions.append(region)
 
 # Filter POS by Region: Based on the selected regions, show corresponding POS
 if selected_regions:
@@ -61,7 +70,6 @@ pivoted_df = avg_revenue_df.pivot_table(
     values='Revenue (USD)',
     aggfunc='sum'
 ).reset_index()
-
 
 # Tabs: Chart and Table
 tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
