@@ -88,8 +88,8 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 # Create a 2x2 grid of plots
-col1, col2 = st.columns([1, 3])
-col3, col4 = st.columns(2)
+col1, col2, col3 = st.columns([1, 3, 3])
+col4, col5 = st.columns(2)
 # Pie chart
 # Step 1: Sidebar radio button for month selection (only call once)
 selected_month = col1.radio(
@@ -102,9 +102,10 @@ filtered_df_month = df[df['Month'] == selected_month]
 
 # Step 3: Calculate the revenue contribution by region
 # Since percentages are already provided, we sum them directly
+
 revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. % - Actual'].sum()
 
-# Step 4: Create the Pie chart
+# Step 4: Create the Pie chart for actual
 fig_pie = go.Figure(data=[go.Pie(
     labels=revenue_cont_month.index,  # Use region names as labels
     values=revenue_cont_month,        # Use the summed percentages as values
@@ -127,6 +128,30 @@ fig_pie.update_layout(
 st.subheader(f"Revenue Contribution for {selected_month}")
 col2.plotly_chart(fig_pie, use_container_width=True)
 
+#Create the Pie chart for actual
+revenue_cont_month_ly = filtered_df_month.groupby('Region')['REVENUE CONT. %-LYR'].sum()
+fig_pie2 = go.Figure(data=[go.Pie(
+    labels=revenue_cont_month_ly.index,  # Use region names as labels
+    values=revenue_cont_month_ly,        # Use the summed percentages as values
+    hoverinfo='label+percent',        # Show label and percentage on hover
+    textinfo='percent',               # Display percentage inside the pie
+    marker=dict(colors=sns.color_palette("Set2", len(revenue_cont_month_ly)).as_hex())  # Seaborn palette
+)])
+fig_pie2.update_layout(
+    title={
+        'text': f"Last Revenue Contribution by Region - {selected_month}",
+        'x': 0.5,  # Center the title horizontally
+        'xanchor': 'center',  # Anchor title to the center
+    },
+    margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+)
+
+# Step 5: Display pie chart in Streamlit
+st.subheader(f"Last Year Revenue Contribution for {selected_month}")
+col3.plotly_chart(fig_pie2, use_container_width=True)
+
+
+
 # Third graph: Revenue by Month (Actual vs Target)
 act_avg = filtered_df.groupby('Month')['ACT -USD'].mean()
 act_tg = filtered_df.groupby('Month')[' TGT-USD'].mean()
@@ -147,7 +172,7 @@ fig_target.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-col3.plotly_chart(fig_target, use_container_width=True)
+col4.plotly_chart(fig_target, use_container_width=True)
 
 # Fourth graph: Exchange Rate Gain/Loss by Month
 exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum()
@@ -170,7 +195,7 @@ fig_exloss.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-col4.plotly_chart(fig_exloss, use_container_width=True)
+col5.plotly_chart(fig_exloss, use_container_width=True)
 
 # Fifth graph: Revenue Contribution Percentage by Region (Actual and LY)
 con_act_avg_region = filtered_df.groupby('Region')['REVENUE CONT. % - Actual'].mean()
