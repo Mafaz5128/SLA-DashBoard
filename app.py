@@ -87,6 +87,10 @@ fig.update_layout(
 # Display the chart
 st.plotly_chart(fig, use_container_width=True)
 
+import plotly.graph_objects as go
+import seaborn as sns
+import streamlit as st
+
 # Define columns for the grid
 col1, col2, col3 = st.columns([2, 4, 4])
 
@@ -159,7 +163,8 @@ with st.container():
     <div style="border: 2px solid #4CAF50; padding: 20px; border-radius: 10px;">
     """, unsafe_allow_html=True)
 
-    # Display pie charts in columns
+    # Display the pie charts in columns inside the container
+    st.subheader(f"Revenue Contribution Comparison for {selected_month}")
     col2.plotly_chart(fig_pie, use_container_width=True)
     col3.plotly_chart(fig_pie2, use_container_width=True)
 
