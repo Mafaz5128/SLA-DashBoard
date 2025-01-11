@@ -16,7 +16,6 @@ month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October',
 df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
 
-# Region filter - Change to multiselect
 # Region filter - Change to checkboxes
 selected_regions = []
 for region in sorted(df['Region'].unique()):
@@ -29,19 +28,18 @@ if selected_regions:
 else:
     pos_options = df['POINT OF SALE'].unique()
 
-# POS filter for the selected regions - Change to multiselect
+# POS filter for the selected regions - Change to dropdown (selectbox)
 selected_pos = st.sidebar.selectbox(
     "Select POS", 
     options=["All"] + list(sorted(pos_options)),
-    default=["All"]  # Default to "All"
+    index=0  # Default to "All"
 )
 
 # Filter the data based on selected Regions and POS
 filtered_df = df[df['Region'].isin(selected_regions)] if selected_regions else df
 
-if "All" not in selected_pos:
-    filtered_df = filtered_df[filtered_df['POINT OF SALE'].isin(selected_pos)]
-
+if selected_pos != "All":
+    filtered_df = filtered_df[filtered_df['POINT OF SALE'] == selected_pos]
 
 
 # Revenue by Month and Region Section
