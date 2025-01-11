@@ -50,12 +50,18 @@ col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
 
 # First graph: Total Revenue Trend by Month
-melted_df = filtered_df.melt(id_vars=["Month"], value_vars=['ACT -USD', 'LYR-USD (2023/24)'], 
-                     var_name='Revenue Type', value_name='Revenue (USD)')
+melted_df = filtered_df.melt(
+    id_vars=["Month"],
+    value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'], 
+    var_name='Revenue Type',
+    value_name='Revenue (USD)'
+)
 
+# Group and calculate total revenue
 avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].sum().reset_index()
 avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=month_order, ordered=True)
 
+# Create the line plot
 fig = px.line(
     avg_revenue_df,
     x='Month',
@@ -66,13 +72,23 @@ fig = px.line(
 )
 
 # Customizing the legend labels
+legend_labels = {
+    "ACT -USD": "Actual Revenue",
+    "LYR-USD (2023/24)": "Last Year Revenue",
+    "TGT-USD": "Target Revenue"
+}
+
 fig.for_each_trace(
-    lambda t: t.update(
-        name="Actual Revenue" if t.name == "ACT -USD" else "Last Year Revenue" if t.name == "LYR-USD (2023/24)" else t.name
-    )
+    lambda t: t.update(name=legend_labels.get(t.name, t.name))
 )
 
-fig.update_layout(xaxis_title="Month", yaxis_title="Total Revenue (USD)")
+# Update layout
+fig.update_layout(
+    xaxis_title="Month",
+    yaxis_title="Total Revenue (USD)"
+)
+
+# Display the chart
 col1.plotly_chart(fig, use_container_width=True)
 
 # Second graph: Revenue Contribution by Region (Pie Chart)
