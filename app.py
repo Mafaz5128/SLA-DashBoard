@@ -75,7 +75,7 @@ fig = px.line(
 legend_labels = {
     "ACT -USD": "Actual Revenue",
     "LYR-USD (2023/24)": "Last Year Revenue",
-    "TGT-USD": "Target Revenue"
+    "hTGT-USD": "Target Revenue"
 }
 
 fig.for_each_trace(
