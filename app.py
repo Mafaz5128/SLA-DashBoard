@@ -48,6 +48,7 @@ st.subheader("Revenue by Month and Region")
 # Create a 2x2 grid of plots
 col1, col2 = st.columns(2)
 col3, col4 = st.columns(2)
+col21, col22 = st.columns(2)
 
 # First graph: Total Revenue Trend by Month
 melted_df = filtered_df.melt(
@@ -94,7 +95,7 @@ col1.plotly_chart(fig, use_container_width=True)
 
 # Pie chart
 # Step 1: Sidebar radio button for month selection (only call once)
-selected_month = col2.radio(
+selected_month = col21.radio(
     "Select a Month:", 
     sorted(df['Month'].unique())  # Provide sorted list of months
 )
@@ -127,7 +128,7 @@ fig_pie.update_layout(
 
 # Step 5: Display pie chart in Streamlit
 st.subheader(f"Revenue Contribution for {selected_month}")
-col2.plotly_chart(fig_pie, use_container_width=True)
+col22.plotly_chart(fig_pie, use_container_width=True)
 
 # Third graph: Revenue by Month (Actual vs Target)
 act_avg = filtered_df.groupby('Month')['ACT -USD'].mean()
