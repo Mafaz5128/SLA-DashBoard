@@ -55,6 +55,13 @@ melted_df = filtered_df.melt(
 # Group and calculate total revenue
 avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].sum().reset_index()
 avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=month_order, ordered=True)
+pivoted_df = avg_revenue_df.pivot_table(
+    index='Month',
+    columns='Revenue Type',
+    values='Revenue (USD)',
+    aggfunc='sum'
+).reset_index()
+
 
 # Tabs: Chart and Table
 tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
@@ -94,7 +101,7 @@ with tab1:
 # Tab 2: Data Table
 with tab2:
     # Display the table
-    st.dataframe(avg_revenue_df)
+    st.dataframe(pivoted_df)
 
 
 # Create a 2x2 grid of plots
