@@ -145,7 +145,6 @@ fig_pie.update_layout(
 )
 
 # Display pie chart for Actual Revenue Contribution
-st.subheader(f"Revenue Contribution for {selected_month}")
 col2.plotly_chart(fig_pie, use_container_width=True)
 
 #Create the Pie chart for actual
@@ -171,7 +170,6 @@ fig_pie2.update_layout(
 )
 
 # Display pie chart for Last Year Revenue Contribution
-st.subheader(f"Last Year Revenue Contribution for {selected_month}")
 col3.plotly_chart(fig_pie2, use_container_width=True)
 
 col4 ,col5 = st.columns(2)
