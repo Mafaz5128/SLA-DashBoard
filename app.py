@@ -127,11 +127,7 @@ fig_pie.update_layout(
 
 # Step 5: Display pie chart in Streamlit
 st.subheader(f"Revenue Contribution for {selected_month}")
-col1, col2 = st.columns([1, 3])
-
-with col2:
-    # Display pie chart
-    col2.plotly_chart(fig_pie, use_container_width=True)
+col2.plotly_chart(fig_pie, use_container_width=True)
 
 # Third graph: Revenue by Month (Actual vs Target)
 act_avg = filtered_df.groupby('Month')['ACT -USD'].mean()
