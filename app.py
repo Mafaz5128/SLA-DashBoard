@@ -107,11 +107,10 @@ with tab2:
 # Create a 2x2 grid of plots
 
 st.subheader("Revenue Contribution by Month and Region")
-col1, col2, col3 = st.columns([2, 4, 4])
-col4, col5 = st.columns(2)
+col1, col2= st.columns(2)
 # Pie chart
 # Step 1: Sidebar radio button for month selection (only call once)
-selected_month = col1.radio(
+selected_month = st.selectbox(
     "Select a Month:", 
     sorted(df['Month'].unique()),
     horizontal=False # Provide sorted list of months
@@ -147,7 +146,7 @@ fig_pie.update_layout(
 )
 
 # Display pie chart for Actual Revenue Contribution
-col2.plotly_chart(fig_pie, use_container_width=True)
+col1.plotly_chart(fig_pie, use_container_width=True)
 
 #Create the Pie chart for actual
 revenue_cont_month_ly = filtered_df_month.groupby('Region')['REVENUE CONT. %-LYR'].sum()
@@ -172,7 +171,7 @@ fig_pie2.update_layout(
 )
 
 # Display pie chart for Last Year Revenue Contribution
-col3.plotly_chart(fig_pie2, use_container_width=True)
+col2.plotly_chart(fig_pie2, use_container_width=True)
 
 
 # Fourth graph: Exchange Rate Gain/Loss by Month
