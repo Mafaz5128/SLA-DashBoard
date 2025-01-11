@@ -67,7 +67,7 @@ fig = px.line(
     x='Month',
     y='Revenue (USD)',
     color='Revenue Type',
-    title="Overall Revenue Trend by Month",
+    title="Overall Revenue (USD) Trend by Month",
     markers=True
 )
 
