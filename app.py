@@ -120,12 +120,12 @@ fig_pie.update_layout(
         'text': f"Actual Revenue Contribution by Region - {selected_month}",
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
-        'font': {'size': 10},  # Reduce title size
+        'font': {'size': 14},  # Reduce title size
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
     legend=dict(
         orientation="v",  # Horizontal legend
-        yanchor="top", # Position legend at the bottom
+        yanchor="left", # Position legend at the bottom
         y=1.05,           # Move legend down
         xanchor="center", # Center the legend
         x=0.5             # Center the legend horizontally
@@ -153,12 +153,12 @@ fig_pie2.update_layout(
         'text': f"Last Revenue Contribution by Region - {selected_month}",
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
-        'font': {'size': 10},  # Reduce title size
+        'font': {'size': 14},  # Reduce title size
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
     legend=dict(
         orientation="v",  # Horizontal legend
-        yanchor="top", # Position legend at the bottom
+        yanchor="left", # Position legend at the bottom
         y=1.05,           # Move legend down
         xanchor="center", # Center the legend
         x=0.5             # Center the legend horizontally
