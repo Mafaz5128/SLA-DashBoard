@@ -28,7 +28,7 @@ else:
     pos_options = df['POINT OF SALE'].unique()
 
 # POS filter for the selected region
-selected_pos = st.selectbox("Select POS", options=["All"] + list(sorted(pos_options)), index=0)
+selected_pos = st.sidebar.selectbox("Select POS", options=["All"] + list(sorted(pos_options)), index=0)
 
 # Filter the data based on selected Region and POS
 if selected_region_filter != "All":
