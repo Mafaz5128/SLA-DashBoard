@@ -123,13 +123,6 @@ fig_pie.update_layout(
         'font': {'size': 14},  # Reduce title size
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
-    legend=dict(
-        orientation="h",  # Horizontal legend
-        yanchor="bottom", # Position legend at the bottom
-        y=1.05,           # Move legend down
-        xanchor="center", # Center the legend
-        x=0.5             # Center the legend horizontally
-    ),
     height=450,  # Increase the height of the pie chart to make it larger
 )
 
@@ -156,13 +149,6 @@ fig_pie2.update_layout(
         'font': {'size': 14},  # Reduce title size
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
-    legend=dict(
-        orientation="h",  # Horizontal legend
-        yanchor="bottem", # Position legend at the bottom
-        y=1.05,           # Move legend down
-        xanchor="center", # Center the legend
-        x=0.5             # Center the legend horizontally
-    ),
     height=450,  # Increase the height of the pie chart to make it larger
 )
 
