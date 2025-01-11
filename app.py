@@ -88,8 +88,8 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 # Create a 2x2 grid of plots
-col3, col4 = st.columns(2)
 col21, col22 = st.columns(2)
+col3, col4 = st.columns(2)
 # Pie chart
 # Step 1: Sidebar radio button for month selection (only call once)
 selected_month = col21.radio(
