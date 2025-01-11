@@ -46,7 +46,7 @@ if selected_pos != "All":
 st.subheader("Revenue by Month and Region")
 
 # Create a 2x2 grid of plots
-col1, col2 = st.columns(2)
+col1 = st.columns(1)
 col3, col4 = st.columns(2)
 col21, col22 = st.columns(2)
 
