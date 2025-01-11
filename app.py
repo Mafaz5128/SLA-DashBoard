@@ -75,7 +75,7 @@ fig = px.line(
 legend_labels = {
     "ACT -USD": "Actual Revenue",
     "LYR-USD (2023/24)": "Last Year Revenue",
-    "hTGT-USD": "Target Revenue"
+    "TGT-USD": "Target Revenue"
 }
 
 fig.for_each_trace(
@@ -93,35 +93,39 @@ col1.plotly_chart(fig, use_container_width=True)
 
 # Second graph: Revenue Contribution by Region (Pie Chart)
 # Step 1: Calculate the sum of 'ACT -USD' by Region
-revenue_by_region = filtered_df.groupby('Region')['ACT -USD'].sum()
+selected_month = st.sidebar.radio(
+    "Select a Month:", 
+    sorted(df['Month'].unique())  # Provide sorted list of months
+)
 
-# Step 2: Calculate the total 'ACT -USD'
-total_revenue = revenue_by_region.sum()
+# Step 2: Filter DataFrame for the selected month
+filtered_df_month = df[df['Month'] == selected_month]
 
-# Step 3: Calculate the percentage contribution by region
-revenue_percentage = (revenue_by_region / total_revenue) * 100
+# Step 3: Calculate the revenue contribution by region
+# Since percentages are already provided, we sum them directly
+revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. %TO THE NETWORK ACT'].sum()
 
 # Step 4: Create the Pie chart
 fig_pie = go.Figure(data=[go.Pie(
-    labels=revenue_percentage.index,
-    values=revenue_percentage,
-    hoverinfo='label+percent',
-    textinfo='percent',
-    marker=dict(colors=sns.color_palette("Set3", len(revenue_percentage)).as_hex())  # Use a seaborn color palette
+    labels=revenue_cont_month.index,  # Use region names as labels
+    values=revenue_cont_month,        # Use the summed percentages as values
+    hoverinfo='label+percent',        # Show label and percentage on hover
+    textinfo='percent',               # Display percentage inside the pie
+    marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex())  # Seaborn palette
 )])
 
 # Customize layout (title centered)
 fig_pie.update_layout(
     title={
-        'text': "Revenue Contribution by Region",
+        'text': f"Revenue Contribution by Region - {selected_month}",
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
 )
 
-# Display pie chart
-col2.plotly_chart(fig_pie, use_container_width=True)
+# Step 5: Display pie chart in Streamlit
+st.plotly_chart(fig_pie, use_container_width=True)
 
 # Third graph: Revenue by Month (Actual vs Target)
 act_avg = filtered_df.groupby('Month')['ACT -USD'].mean()
