@@ -111,8 +111,7 @@ fig_pie = go.Figure(data=[go.Pie(
     values=revenue_cont_month,        # Use the summed percentages as values
     hoverinfo='label+percent',        # Show label and percentage on hover
     textinfo='percent',               # Display percentage inside the pie
-    marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex()),  # Seaborn palette
-    insidetextorientation='horizontal'
+    marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex())
 )])
 
 # Customize layout (title centered)
@@ -144,7 +143,7 @@ fig_pie2.update_layout(
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
     },
-    margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+    margin=dict(t=140, b=40, l=40, r=40),  # Adjust margins for better visibility
 )
 
 # Step 5: Display pie chart in Streamlit
