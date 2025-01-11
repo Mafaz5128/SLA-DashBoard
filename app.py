@@ -91,8 +91,10 @@ fig.update_layout(
 # Display the chart
 col1.plotly_chart(fig, use_container_width=True)
 
-# Second graph: Revenue Contribution by Region (Pie Chart)
-# Step 1: Calculate the sum of 'ACT -USD' by Region
+
+# Pie chart
+
+# Step 1: Sidebar radio button for month selection
 selected_month = st.sidebar.radio(
     "Select a Month:", 
     sorted(df['Month'].unique())  # Provide sorted list of months
@@ -125,7 +127,19 @@ fig_pie.update_layout(
 )
 
 # Step 5: Display pie chart in Streamlit
-st.plotly_chart(fig_pie, use_container_width=True)
+st.subheader(f"Revenue Contribution for {selected_month}")
+col1, col2 = st.columns([1, 3])
+
+with col1:
+    # Radio button will remain on the sidebar
+    st.sidebar.radio(
+        "Select a Month:", 
+        sorted(df['Month'].unique())  # Provide sorted list of months
+    )
+
+with col2:
+    # Display pie chart
+    col2.plotly_chart(fig_pie, use_container_width=True)
 
 # Third graph: Revenue by Month (Actual vs Target)
 act_avg = filtered_df.groupby('Month')['ACT -USD'].mean()
