@@ -94,7 +94,13 @@ col1.plotly_chart(fig, use_container_width=True)
 
 # Pie chart
 
-# Step 1: Sidebar radio button for month selection
+import streamlit as st
+import plotly.graph_objects as go
+import seaborn as sns
+
+# Assume `df` is your DataFrame
+
+# Step 1: Sidebar radio button for month selection (only call once)
 selected_month = st.sidebar.radio(
     "Select a Month:", 
     sorted(df['Month'].unique())  # Provide sorted list of months
@@ -129,13 +135,6 @@ fig_pie.update_layout(
 # Step 5: Display pie chart in Streamlit
 st.subheader(f"Revenue Contribution for {selected_month}")
 col1, col2 = st.columns([1, 3])
-
-with col1:
-    # Radio button will remain on the sidebar
-    st.sidebar.radio(
-        "Select a Month:", 
-        sorted(df['Month'].unique())  # Provide sorted list of months
-    )
 
 with col2:
     # Display pie chart
