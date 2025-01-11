@@ -52,7 +52,7 @@ col3, col4 = st.columns(2)
 # First graph: Total Revenue Trend by Month
 melted_df = filtered_df.melt(
     id_vars=["Month"],
-    value_vars=['ACT -USD', 'LYR-USD (2023/24)', 'TGT-USD'], 
+    value_vars=['ACT -USD', 'LYR-USD (2023/24)', ' TGT-USD'], 
     var_name='Revenue Type',
     value_name='Revenue (USD)'
 )
