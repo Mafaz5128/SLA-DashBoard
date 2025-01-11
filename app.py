@@ -174,29 +174,7 @@ fig_pie2.update_layout(
 # Display pie chart for Last Year Revenue Contribution
 col3.plotly_chart(fig_pie2, use_container_width=True)
 
-col4 ,col5 = st.columns(2)
-
-# Third graph: Revenue by Month (Actual vs Target)
-act_avg = filtered_df.groupby('Month')['ACT -USD'].mean()
-act_tg = filtered_df.groupby('Month')[' TGT-USD'].mean()
-
-# Ensure proper month ordering
-act_avg = act_avg.reindex(month_order)
-act_tg = act_tg.reindex(month_order)
-
-fig_target = go.Figure()
-fig_target.add_trace(go.Scatter(x=act_avg.index, y=act_avg, mode='lines+markers', name='Actual Revenue', marker=dict(symbol='circle', color='#00CC96')))
-fig_target.add_trace(go.Scatter(x=act_tg.index, y=act_tg, mode='lines+markers', name='Actual Target', marker=dict(symbol='square', color='#636EFA')))
-
-fig_target.update_layout(
-    title="Average Revenue by Month (Actual vs Target)",
-    xaxis_title="Month",
-    yaxis_title="Average Revenue (USD)",
-    legend_title="Legend",
-    xaxis=dict(tickangle=45)
-)
-
-col4.plotly_chart(fig_target, use_container_width=True)
+st.plotly_chart(fig_target, use_container_width=True)
 
 # Fourth graph: Exchange Rate Gain/Loss by Month
 exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum()
