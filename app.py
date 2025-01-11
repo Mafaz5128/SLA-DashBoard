@@ -103,7 +103,7 @@ filtered_df_month = df[df['Month'] == selected_month]
 
 # Step 3: Calculate the revenue contribution by region
 # Since percentages are already provided, we sum them directly
-revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. %TO THE NETWORK ACT'].sum()
+revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. % - Actual'].sum()
 
 # Step 4: Create the Pie chart
 fig_pie = go.Figure(data=[go.Pie(
