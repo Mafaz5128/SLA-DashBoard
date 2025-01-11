@@ -124,7 +124,7 @@ fig_pie.update_layout(
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
     legend=dict(
-        orientation="h",  # Horizontal legend
+        orientation="v",  # Horizontal legend
         yanchor="bottom", # Position legend at the bottom
         y=-0.2,           # Move legend down
         xanchor="center", # Center the legend
@@ -157,7 +157,7 @@ fig_pie2.update_layout(
     },
     margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
     legend=dict(
-        orientation="h",  # Horizontal legend
+        orientation="v",  # Horizontal legend
         yanchor="bottom", # Position legend at the bottom
         y=-0.2,           # Move legend down
         xanchor="center", # Center the legend
