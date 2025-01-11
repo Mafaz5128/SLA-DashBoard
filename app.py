@@ -41,7 +41,6 @@ filtered_df = df[df['Region'].isin(selected_regions)] if selected_regions else d
 if selected_pos != "All":
     filtered_df = filtered_df[filtered_df['POINT OF SALE'] == selected_pos]
 
-
 # Revenue by Month and Region Section
 st.subheader("Revenue by Month and Region")
 
@@ -57,35 +56,43 @@ melted_df = filtered_df.melt(
 avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].sum().reset_index()
 avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=month_order, ordered=True)
 
-# Create the line plot
-fig = px.line(
-    avg_revenue_df,
-    x='Month',
-    y='Revenue (USD)',
-    color='Revenue Type',
-    title="Overall Revenue (USD) Trend by Month",
-    markers=True
-)
+# Tabs: Chart and Table
+tab_selection = st.selectbox("Select View", ["Chart", "Table"])
 
-# Customizing the legend labels
-legend_labels = {
-    "ACT -USD": "Actual Revenue",
-    "LYR-USD (2023/24)": "Last Year Revenue",
-    "TGT-USD": "Target Revenue"
-}
+if tab_selection == "Chart":
+    # Create the line plot
+    fig = px.line(
+        avg_revenue_df,
+        x='Month',
+        y='Revenue (USD)',
+        color='Revenue Type',
+        title="Overall Revenue (USD) Trend by Month",
+        markers=True
+    )
 
-fig.for_each_trace(
-    lambda t: t.update(name=legend_labels.get(t.name, t.name))
-)
+    # Customizing the legend labels
+    legend_labels = {
+        "ACT -USD": "Actual Revenue",
+        "LYR-USD (2023/24)": "Last Year Revenue",
+        "TGT-USD": "Target Revenue"
+    }
 
-# Update layout
-fig.update_layout(
-    xaxis_title="Month",
-    yaxis_title="Total Revenue (USD)"
-)
+    fig.for_each_trace(
+        lambda t: t.update(name=legend_labels.get(t.name, t.name))
+    )
 
-# Display the chart
-st.plotly_chart(fig, use_container_width=True)
+    # Update layout
+    fig.update_layout(
+        xaxis_title="Month",
+        yaxis_title="Total Revenue (USD)"
+    )
+
+    # Display the chart
+    st.plotly_chart(fig, use_container_width=True)
+
+elif tab_selection == "Table":
+    # Display the table
+    st.dataframe(avg_revenue_df)
 
 # Create a 2x2 grid of plots
 col1, col2, col3 = st.columns([2, 4, 4])
