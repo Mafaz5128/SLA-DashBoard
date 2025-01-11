@@ -109,7 +109,7 @@ col1, col2, col3 = st.columns([2, 4, 4])
 col4, col5 = st.columns(2)
 # Pie chart
 # Step 1: Sidebar radio button for month selection (only call once)
-selected_month = st.radio(
+selected_month = col1.radio(
     "Select a Month:", 
     sorted(df['Month'].unique()),
     horizontal=False # Provide sorted list of months
