@@ -107,14 +107,12 @@ with tab2:
 # Create a 2x2 grid of plots
 
 st.subheader("Revenue Contribution by Month and Region")
-col1, col2= st.columns(2)
-# Pie chart
-# Step 1: Sidebar radio button for month selection (only call once)
 selected_month = st.selectbox(
     "Select a Month:", 
     sorted(df['Month'].unique()),
 )
-
+col1, col2= st.columns(2)
+# Pie chart
 # Step 2: Filter DataFrame for the selected month
 filtered_df_month = df[df['Month'] == selected_month]
 
