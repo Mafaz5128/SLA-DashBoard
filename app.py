@@ -90,7 +90,7 @@ fig.update_layout(
 )
 
 # Display the chart
-col1.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
 
 
 # Pie chart
