@@ -113,7 +113,6 @@ col1, col2= st.columns(2)
 selected_month = st.selectbox(
     "Select a Month:", 
     sorted(df['Month'].unique()),
-    horizontal=False # Provide sorted list of months
 )
 
 # Step 2: Filter DataFrame for the selected month
