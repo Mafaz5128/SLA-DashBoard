@@ -121,7 +121,7 @@ fig_pie.update_layout(
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
     },
-    margin=dict(t=40, b=40, l=40, r=40),  # Adjust margins for better visibility
+    margin=dict(t=40, b=100, l=40, r=40),  # Adjust margins for better visibility
 )
 
 # Step 5: Display pie chart in Streamlit
