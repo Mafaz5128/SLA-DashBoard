@@ -94,7 +94,8 @@ col4, col5 = st.columns(2)
 # Step 1: Sidebar radio button for month selection (only call once)
 selected_month = col1.radio(
     "Select a Month:", 
-    sorted(df['Month'].unique())  # Provide sorted list of months
+    sorted(df['Month'].unique()),
+    horizontal=False # Provide sorted list of months
 )
 
 # Step 2: Filter DataFrame for the selected month
