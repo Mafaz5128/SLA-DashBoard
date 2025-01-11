@@ -17,7 +17,7 @@ df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
 
 # Region filter
-selected_region_filter = st.sidebar.checkbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
+selected_region_filter = st.sidebar.multiselect("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
 
 # Filter POS by Region: Based on the region selected, show corresponding POS
 if selected_region_filter != "All":
