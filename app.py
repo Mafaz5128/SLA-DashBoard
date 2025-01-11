@@ -111,7 +111,8 @@ fig_pie = go.Figure(data=[go.Pie(
     values=revenue_cont_month,        # Use the summed percentages as values
     hoverinfo='label+percent',        # Show label and percentage on hover
     textinfo='percent',               # Display percentage inside the pie
-    marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex())  # Seaborn palette
+    marker=dict(colors=sns.color_palette("Set3", len(revenue_cont_month)).as_hex()),  # Seaborn palette
+    insidetextorientation='horizontal'
 )])
 
 # Customize layout (title centered)
