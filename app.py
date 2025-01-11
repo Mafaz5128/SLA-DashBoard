@@ -94,7 +94,7 @@ col1.plotly_chart(fig, use_container_width=True)
 
 # Pie chart
 # Step 1: Sidebar radio button for month selection (only call once)
-selected_month = st.radio(
+selected_month = col2.radio(
     "Select a Month:", 
     sorted(df['Month'].unique())  # Provide sorted list of months
 )
