@@ -9,17 +9,15 @@ df = pd.read_excel("Stationary_Perf.xlsx")
 
 # Streamlit UI
 st.set_page_config(page_title="Station Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
-st.title("Revenue Analysis Dashboard")
+st.title("Station Revenue Analysis")
 
 # Set the month order explicitly
 month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November']
 df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 
-# Filters Section
-st.subheader("Filters")
 
 # Region filter
-selected_region_filter = st.selectbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
+selected_region_filter = st.sidebar.selectbox("Select Region", options=["All"] + list(sorted(df['Region'].unique())), index=0)
 
 # Filter POS by Region: Based on the region selected, show corresponding POS
 if selected_region_filter != "All":
