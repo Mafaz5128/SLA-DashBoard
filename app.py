@@ -93,15 +93,8 @@ col1.plotly_chart(fig, use_container_width=True)
 
 
 # Pie chart
-
-import streamlit as st
-import plotly.graph_objects as go
-import seaborn as sns
-
-# Assume `df` is your DataFrame
-
 # Step 1: Sidebar radio button for month selection (only call once)
-selected_month = st.sidebar.radio(
+selected_month = st.radio(
     "Select a Month:", 
     sorted(df['Month'].unique())  # Provide sorted list of months
 )
@@ -125,7 +118,7 @@ fig_pie = go.Figure(data=[go.Pie(
 # Customize layout (title centered)
 fig_pie.update_layout(
     title={
-        'text': f"Revenue Contribution by Region - {selected_month}",
+        'text': f"Actual Revenue Contribution by Region - {selected_month}",
         'x': 0.5,  # Center the title horizontally
         'xanchor': 'center',  # Anchor title to the center
     },
