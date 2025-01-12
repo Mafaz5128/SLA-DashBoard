@@ -107,12 +107,12 @@ with tab1:
     )
 
     # Display the chart
-    col12.plotly_chart(fig, use_container_width=True)
+    tab1.plotly_chart(fig, use_container_width=True)
 
 # Tab 2: Data Table
 with tab2:
     # Display the table
-    col12.dataframe(pivoted_df)
+    tab2.dataframe(pivoted_df)
 
 
 # Create a 2x2 grid of plots
