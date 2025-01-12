@@ -23,15 +23,15 @@ df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 # Add 'All' option to the regions
 regions = sorted(df['Region'].unique())
 all_regions_option = ["All"] + regions
-
+col11, col12, col13 = st.columns([1, 4, 1])
 # Sidebar checkbox for regions
 selected_regions = []
-st.sidebar.write("Select Regions:")
-if st.sidebar.checkbox("All", value=True):  # Default to 'All' checked
+col11.write("Select Regions:")
+if col11.checkbox("All", value=True):  # Default to 'All' checked
     selected_regions = regions  # Select all regions
 else:
     for region in regions:
-        if st.sidebar.checkbox(region):  # Default unchecked for individual regions
+        if col11.checkbox(region):  # Default unchecked for individual regions
             selected_regions.append(region)
 
 # Filter POS by Region: Based on the selected regions, show corresponding POS
@@ -41,7 +41,7 @@ else:
     pos_options = df['POINT OF SALE'].unique()
 
 # POS filter for the selected regions - Change to dropdown (selectbox)
-selected_pos = st.sidebar.selectbox(
+selected_pos = col13.selectbox(
     "Select POS", 
     options=["All"] + list(sorted(pos_options)),
     index=0  # Default to "All"
@@ -54,7 +54,7 @@ if selected_pos != "All":
     filtered_df = filtered_df[filtered_df['POINT OF SALE'] == selected_pos]
 
 # Revenue by Month and Region Section
-st.subheader("Revenue by Month and Region")
+col12.subheader("Revenue by Month and Region")
 
 # First graph: Total Revenue Trend by Month
 melted_df = filtered_df.melt(
@@ -75,7 +75,7 @@ pivoted_df = avg_revenue_df.pivot_table(
 ).reset_index()
 
 # Tabs: Chart and Table
-tab1, tab2 = st.tabs(["📈 Chart", "🗃 Data"])
+tab1, tab2 = col12.tabs(["📈 Chart", "🗃 Data"])
 
 # Tab 1: Chart
 with tab1:
@@ -107,12 +107,12 @@ with tab1:
     )
 
     # Display the chart
-    st.plotly_chart(fig, use_container_width=True)
+    col12.plotly_chart(fig, use_container_width=True)
 
 # Tab 2: Data Table
 with tab2:
     # Display the table
-    st.dataframe(pivoted_df)
+    col12.dataframe(pivoted_df)
 
 
 # Create a 2x2 grid of plots
