@@ -3,6 +3,9 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import seaborn as sns
+import altair as alt
+
+alt.themes.enable("dark")
 
 # Load the data
 df = pd.read_excel("Stationary_Perf.xlsx")
