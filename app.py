@@ -12,6 +12,11 @@ df = pd.read_excel("Stationary_Perf.xlsx")
 
 # Streamlit UI
 st.set_page_config(page_title="Station Revenue Analysis Dashboard", page_icon=":chart_with_upwards_trend:", layout="wide")
+#Open Css file
+
+with open('style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
 st.title("Station Revenue Analysis")
 
 # Set the month order explicitly
@@ -204,50 +209,3 @@ fig_pie2.update_layout(
 # Display pie chart for Last Year Revenue Contribution
 col2.plotly_chart(fig_pie2, use_container_width=True)
 
-
-# Adding custom CSS styles for the dashboard and filters
-st.markdown("""
-    <style>
-    /* Apply background color to the entire dashboard */
-    .block-container {
-        background-color: #f4f8fb;  /* Light blue background */
-    }
-
-    /* Apply background color to the filter widgets */
-    .stSelectbox, .stMarkdown, .stRadio, .stButton {
-        background-color: #e8f0fe;
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Customizing filter text and dropdown */
-    .stSelectbox select {
-        font-size: 16px;
-        color: #333;
-    }
-
-    .stSelectbox label {
-        color: #4f5d73;
-        font-weight: bold;
-    }
-
-    .stButton {
-        background-color: #66b3ff;
-        color: white;
-    }
-
-    .stButton:hover {
-        background-color: #0059b3;
-    }
-
-    .stSelectbox select:focus {
-        border: 2px solid #66b3ff;
-        outline: none;
-    }
-
-    .stSelectbox label:hover {
-        color: #0059b3;
-    }
-    </style>
-""", unsafe_allow_html=True)
