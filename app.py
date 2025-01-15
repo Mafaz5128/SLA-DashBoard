@@ -105,7 +105,7 @@ with tab2:
     ).reset_index()
     tab2.dataframe(pivoted_df)
 
-a1, a2, a3 = st.columns([3, 2, 2])
+a1, a2, a3 = st.columns([1, 1, 1])
 
 # Exchange Rate Gain/Loss Chart
 a1.subheader("Exchange Rate Gain/Loss by Month")
@@ -126,7 +126,6 @@ fig_exloss.update_layout(
 a1.plotly_chart(fig_exloss, use_container_width=True)
 
 # Extract the top 5 performers by POS based on ACT-USD
-st.subheader("Top 5 Perfomers")
 top_performers = (
     filtered_df.groupby('POINT OF SALE')['ACT -USD']
     .sum()
