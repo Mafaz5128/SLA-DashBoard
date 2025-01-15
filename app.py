@@ -203,7 +203,7 @@ fig_exloss.update_layout(
     xaxis=dict(tickangle=45)
 )
 
-st.plotly_chart(fig_exloss, use_container_width=True)
+col1.plotly_chart(fig_exloss, use_container_width=True)
 
 
 # Adding custom CSS styles for the dashboard and filters
