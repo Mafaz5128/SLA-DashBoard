@@ -18,7 +18,7 @@ with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 st.title("Station Revenue Analysis")
-
+st.subheader("Revenue by Month and Region")
 # Set the month order explicitly
 month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November']
 df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
@@ -30,8 +30,6 @@ regions = sorted(df['Region'].unique())
 all_regions_option = ["All"] + regions
 col11, col12, col13 = st.columns([1, 4, 1])
 
-with col12:
-    st.subheader("Revenue by Month and Region")
 
 # Sidebar checkbox for regions
 selected_regions = []
