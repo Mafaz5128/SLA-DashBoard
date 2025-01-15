@@ -134,10 +134,6 @@ top_performers = (
     .reset_index()
 )
 
-# Display the top performers as a table
-a2.write(f"Top 5 Performers of {', '.join(selected_regions) or 'All Regions'} - 2024")
-a2.table(top_performers)
-
 # Optional: Visualize the top 5 performers with a bar chart
 fig_top_performers = px.bar(
     top_performers,
@@ -168,10 +164,6 @@ top_performers_last_year = (
     .nlargest(5)
     .reset_index()
 )
-
-# Display the top performers for last year as a table
-a3.write(f"Top 5 Performers of {', '.join(selected_regions) or 'All Regions'} - 2023")
-a3.table(top_performers_last_year)
 
 # Optional: Visualize the top 5 performers for last year with a bar chart
 fig_top_performers_last_year = px.bar(
