@@ -1,6 +1,6 @@
 [theme]
-primaryColor = "#1a73e8"  # Classic blue for buttons and highlights
-backgroundColor = "#f4f4f9"  # Light grayish white background for a clean look
-secondaryBackgroundColor = "#e9ecef"  # Slightly darker gray for sidebar differentiation
-textColor = "#212529"  # Dark gray-black for excellent readability
-font = "serif"  # Classic serif font for a traditional feel
+primaryColor = "#f76c6c"
+backgroundColor = "#fffbea"
+secondaryBackgroundColor = "#ffe7d6"
+textColor = "#4a4a4a"
+font = "sans serif"
