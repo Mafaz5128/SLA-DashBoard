@@ -171,6 +171,7 @@ fig_top_performers_last_year = px.bar(
     x='POINT OF SALE',
     y='LYR-USD (2023/24)',
     title=f"Top 5 Performers of - {', '.join(selected_regions) or 'All Regions'}-2024",
+    color = 'LYR-USD (2023/24)',
     text_auto='.2s',
     labels={'LYR-USD (2023/24)': 'Last Year Revenue (USD)', 'POINT OF SALE': 'Point of Sale'},
     color_continuous_scale=px.colors.sequential.Plasma
