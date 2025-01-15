@@ -104,9 +104,9 @@ with tab2:
         aggfunc='sum'
     ).reset_index()
     tab2.dataframe(pivoted_df)
-
+a1,a2 = st.columns(2)
 # Exchange Rate Gain/Loss Chart
-st.subheader("Exchange Rate Gain/Loss by Month")
+a1.subheader("Exchange Rate Gain/Loss by Month")
 exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum().reindex(month_order)
 exloss_avg_ly = filtered_df.groupby('Month')['Exchange  -gain/(loss)'].sum().reindex(month_order)
 
@@ -121,7 +121,7 @@ fig_exloss.update_layout(
     yaxis_title="Gain/Loss (USD)",
     xaxis=dict(tickangle=45)
 )
-st.plotly_chart(fig_exloss, use_container_width=True)
+a1.plotly_chart(fig_exloss, use_container_width=True)
 
 # Revenue Contribution Pie Charts
 st.subheader("Revenue Contribution by Month and Region")
