@@ -104,7 +104,7 @@ with tab2:
         aggfunc='sum'
     ).reset_index()
     tab2.dataframe(pivoted_df)
-a1,a2,a3 = st.columns([4,2,2])
+a1,a2,a3 = st.columns([3,2,2])
 # Exchange Rate Gain/Loss Chart
 a1.subheader("Exchange Rate Gain/Loss by Month")
 exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum().reindex(month_order)
