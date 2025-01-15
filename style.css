@@ -1,1 +1,38 @@
-
+st.markdown("""
+    <style>
+    /* Apply background color to the entire dashboard */
+    .block-container {
+        background-color: #f4f8fb;  /* Light blue background */
+    }
+    /* Apply background color to the filter widgets */
+    .stSelectbox, .stMarkdown, .stRadio, .stButton {
+        background-color: #e8f0fe;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    /* Customizing filter text and dropdown */
+    .stSelectbox select {
+        font-size: 16px;
+        color: #333;
+    }
+    .stSelectbox label {
+        color: #4f5d73;
+        font-weight: bold;
+    }
+    .stButton {
+        background-color: #66b3ff;
+        color: white;
+    }
+    .stButton:hover {
+        background-color: #0059b3;
+    }
+    .stSelectbox select:focus {
+        border: 2px solid #66b3ff;
+        outline: none;
+    }
+    .stSelectbox label:hover {
+        color: #0059b3;
+    }
+    </style>
+""", unsafe_allow_html=True)
