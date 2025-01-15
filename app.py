@@ -149,7 +149,8 @@ fig_top_performers = px.bar(
 fig_top_performers.update_layout(
     xaxis_title="Point of Sale",
     yaxis_title="Actual Revenue (USD)",
-    title_x=0.2  # Center the chart title
+    title_x=0.2 , # Center the chart title
+    title_font = dict(size=12)
 )
 
 # Display the bar chart
