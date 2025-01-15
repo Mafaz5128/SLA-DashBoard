@@ -133,7 +133,7 @@ top_performers = (
 )
 
 # Display the top performers as a table
-a2.write("Top 5 Performers by POINT OF SALE (based on ACT-USD):")
+a2.write("Top 5 Performers")
 a2.table(top_performers)
 
 # Optional: Visualize the top 5 performers with a bar chart
@@ -157,6 +157,42 @@ fig_top_performers.update_layout(
 
 # Display the bar chart
 a2.plotly_chart(fig_top_performers, use_container_width=True)
+# Extract Key Performers for Last Year
+a3.subheader("Key Players - Last Year (2023)")
+
+# Extract the top 5 performers by POS based on LYR-USD (2023/24)
+top_performers_last_year = (
+    df.groupby('POINT OF SALE')['LYR-USD (2023/24)']
+    .sum()
+    .nlargest(5)
+    .reset_index()
+)
+
+# Display the top performers for last year as a table
+a3.write("Top 5 Performers")
+a3.table(top_performers_last_year)
+
+# Optional: Visualize the top 5 performers for last year with a bar chart
+fig_top_performers_last_year = px.bar(
+    top_performers_last_year,
+    x='POINT OF SALE',
+    y='LYR-USD (2023/24)',
+    title="Top 5 Performers by LYR-USD (2023/24)",
+    text_auto='.2s',
+    color='LYR-USD (2023/24)',
+    labels={'LYR-USD (2023/24)': 'Last Year Revenue (USD)', 'POINT OF SALE': 'Point of Sale'},
+    color_continuous_scale=px.colors.sequential.Plasma
+)
+
+# Update chart layout
+fig_top_performers_last_year.update_layout(
+    xaxis_title="Point of Sale",
+    yaxis_title="Last Year Revenue (USD)",
+    title_x=0.5  # Center the chart title
+)
+
+# Display the bar chart for last year
+a3.plotly_chart(fig_top_performers_last_year, use_container_width=True)
 
 
 
