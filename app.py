@@ -104,7 +104,9 @@ with tab2:
         aggfunc='sum'
     ).reset_index()
     tab2.dataframe(pivoted_df)
-a1,a2,a3 = st.columns([3,2,2])
+
+a1, a2, a3 = st.columns([3, 2, 2])
+
 # Exchange Rate Gain/Loss Chart
 a1.subheader("Exchange Rate Gain/Loss by Month")
 exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum().reindex(month_order)
@@ -124,16 +126,16 @@ fig_exloss.update_layout(
 a1.plotly_chart(fig_exloss, use_container_width=True)
 
 # Extract the top 5 performers by POS based on ACT-USD
-a2.subheader("Key Players -2024 ")
+a2.subheader("Key Players -2024")
 top_performers = (
-    df.groupby('POINT OF SALE')['ACT -USD']
+    filtered_df.groupby('POINT OF SALE')['ACT -USD']
     .sum()
     .nlargest(5)
     .reset_index()
 )
 
 # Display the top performers as a table
-a2.write("Top 5 Performers")
+a2.write(f"Top 5 Performers for {', '.join(selected_regions) or 'All Regions'}")
 a2.table(top_performers)
 
 # Optional: Visualize the top 5 performers with a bar chart
@@ -141,7 +143,7 @@ fig_top_performers = px.bar(
     top_performers,
     x='POINT OF SALE',
     y='ACT -USD',
-    title="Top 5 Performers by ACT-USD",
+    title=f"Top 5 Performers by ACT-USD - {', '.join(selected_regions) or 'All Regions'}",
     text_auto='.2s',
     color='ACT -USD',
     labels={'ACT -USD': 'Actual Revenue (USD)', 'POINT OF SALE': 'Point of Sale'},
@@ -157,19 +159,20 @@ fig_top_performers.update_layout(
 
 # Display the bar chart
 a2.plotly_chart(fig_top_performers, use_container_width=True)
+
 # Extract Key Performers for Last Year
 a3.subheader("Key Players - Last Year (2023)")
 
 # Extract the top 5 performers by POS based on LYR-USD (2023/24)
 top_performers_last_year = (
-    df.groupby('POINT OF SALE')['LYR-USD (2023/24)']
+    filtered_df.groupby('POINT OF SALE')['LYR-USD (2023/24)']
     .sum()
     .nlargest(5)
     .reset_index()
 )
 
 # Display the top performers for last year as a table
-a3.write("Top 5 Performers")
+a3.write(f"Top 5 Performers for {', '.join(selected_regions) or 'All Regions'}")
 a3.table(top_performers_last_year)
 
 # Optional: Visualize the top 5 performers for last year with a bar chart
@@ -177,7 +180,7 @@ fig_top_performers_last_year = px.bar(
     top_performers_last_year,
     x='POINT OF SALE',
     y='LYR-USD (2023/24)',
-    title="Top 5 Performers by LYR-USD (2023/24)",
+    title=f"Top 5 Performers by LYR-USD (2023/24) - {', '.join(selected_regions) or 'All Regions'}",
     text_auto='.2s',
     color='LYR-USD (2023/24)',
     labels={'LYR-USD (2023/24)': 'Last Year Revenue (USD)', 'POINT OF SALE': 'Point of Sale'},
