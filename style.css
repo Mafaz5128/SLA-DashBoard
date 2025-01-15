@@ -1,13 +1,13 @@
 /* Apply background color to the entire dashboard */
-.block-container {
+#.block-container {
     #background-color: #f0f7fc;  /* Soft light blue background */
     #color: #2c3e50;  /* Dark blue font for text readability */
     #font-family: 'Arial', sans-serif;
-}
+#}
 
 /* Apply background color to the filter widgets */
 .stSelectbox, .stMarkdown, .stRadio, .stButton {
-    background-color: #e6f7ff; /* Pale blue background for widgets */
+    background-color: #4169e1; /* Pale blue background for widgets */
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly darker shadow */
