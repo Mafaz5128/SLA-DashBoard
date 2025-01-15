@@ -122,8 +122,41 @@ fig_exloss.update_layout(
     xaxis=dict(tickangle=45)
 )
 a1.plotly_chart(fig_exloss, use_container_width=True)
-# Extract Key Perfomencers
+
+# Extract the top 5 performers by POS based on ACT-USD
 a2.subheader("Key Players -2024 ")
+top_performers = (
+    df.groupby('POINT OF SALE')['ACT -USD']
+    .sum()
+    .nlargest(5)
+    .reset_index()
+)
+
+# Display the top performers as a table
+a2.write("Top 5 Performers by POINT OF SALE (based on ACT-USD):")
+a2.table(top_performers)
+
+# Optional: Visualize the top 5 performers with a bar chart
+fig_top_performers = px.bar(
+    top_performers,
+    x='POINT OF SALE',
+    y='ACT -USD',
+    title="Top 5 Performers by ACT-USD",
+    text_auto='.2s',
+    color='ACT -USD',
+    labels={'ACT -USD': 'Actual Revenue (USD)', 'POINT OF SALE': 'Point of Sale'},
+    color_continuous_scale=px.colors.sequential.Viridis
+)
+
+# Update chart layout
+fig_top_performers.update_layout(
+    xaxis_title="Point of Sale",
+    yaxis_title="Actual Revenue (USD)",
+    title_x=0.5  # Center the chart title
+)
+
+# Display the bar chart
+a2.plotly_chart(fig_top_performers, use_container_width=True)
 
 
 
