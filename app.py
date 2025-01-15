@@ -17,7 +17,14 @@ st.set_page_config(page_title="Station Revenue Analysis Dashboard", page_icon=":
 with open('style.css') as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-st.title("Station Revenue Analysis")
+st.markdown(
+    """
+    <h1 style="text-align: center; color: black;">
+        Station Revenue Analysis
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 st.subheader("Revenue by Month and Region")
 # Set the month order explicitly
 month_order = ['April', 'May', 'June', 'July', 'August', 'September', 'October', 'November']
