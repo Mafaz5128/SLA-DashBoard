@@ -115,8 +115,31 @@ with tab2:
     tab2.dataframe(pivoted_df)
 
 
-# Create a 2x2 grid of plots
+# Fourth graph: Exchange Rate Gain/Loss by Month
+exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum()
+exloss_avg_ly = filtered_df.groupby('Month')['Exchange  -gain/(loss)'].sum()
 
+# Ensure proper month ordering
+exloss_avg = exloss_avg.reindex(month_order)
+exloss_avg_ly = exloss_avg_ly.reindex(month_order)
+
+fig_exloss = go.Figure()
+fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='ExgRate - Gain/Loss (Current)', marker=dict(symbol='circle', color='#EF553B')))
+fig_exloss.add_trace(go.Scatter(x=exloss_avg_ly.index, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - Gain/Loss (Last Year)', marker=dict(symbol='square', color='#636EFA')))
+fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=[0]*len(exloss_avg), mode='lines', line=dict(color='gray', dash='dash'), name='Zero Line'))
+
+fig_exloss.update_layout(
+    title="Exchange Rate Gain/Loss by Month",
+    xaxis_title="Month",
+    yaxis_title="Gain/Loss (USD)",
+    legend_title="Legend",
+    xaxis=dict(tickangle=45)
+)
+
+st.plotly_chart(fig_exloss, use_container_width=True)
+
+
+# Create a 2x2 grid of plots
 st.subheader("Revenue Contribution by Month and Region")
 selected_month = st.selectbox(
     "Select a Month:", 
@@ -180,30 +203,6 @@ fig_pie2.update_layout(
 
 # Display pie chart for Last Year Revenue Contribution
 col2.plotly_chart(fig_pie2, use_container_width=True)
-
-
-# Fourth graph: Exchange Rate Gain/Loss by Month
-exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum()
-exloss_avg_ly = filtered_df.groupby('Month')['Exchange  -gain/(loss)'].sum()
-
-# Ensure proper month ordering
-exloss_avg = exloss_avg.reindex(month_order)
-exloss_avg_ly = exloss_avg_ly.reindex(month_order)
-
-fig_exloss = go.Figure()
-fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='ExgRate - Gain/Loss (Current)', marker=dict(symbol='circle', color='#EF553B')))
-fig_exloss.add_trace(go.Scatter(x=exloss_avg_ly.index, y=exloss_avg_ly, mode='lines+markers', name='ExgRate - Gain/Loss (Last Year)', marker=dict(symbol='square', color='#636EFA')))
-fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=[0]*len(exloss_avg), mode='lines', line=dict(color='gray', dash='dash'), name='Zero Line'))
-
-fig_exloss.update_layout(
-    title="Exchange Rate Gain/Loss by Month",
-    xaxis_title="Month",
-    yaxis_title="Gain/Loss (USD)",
-    legend_title="Legend",
-    xaxis=dict(tickangle=45)
-)
-
-col1.plotly_chart(fig_exloss, use_container_width=True)
 
 
 # Adding custom CSS styles for the dashboard and filters
