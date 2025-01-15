@@ -1,33 +1,58 @@
+/* Apply background color to the entire dashboard */
 .block-container {
-        background-color: #f4f8fb;  /* Light blue background */
-    }
-    /* Apply background color to the filter widgets */
-    .stSelectbox, .stMarkdown, .stRadio, .stButton {
-        background-color: #e8f0fe;
-        border-radius: 10px;
-        padding: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    /* Customizing filter text and dropdown */
-    .stSelectbox select {
-        font-size: 16px;
-        color: #333;
-    }
-    .stSelectbox label {
-        color: #4f5d73;
-        font-weight: bold;
-    }
-    .stButton {
-        background-color: #66b3ff;
-        color: white;
-    }
-    .stButton:hover {
-        background-color: #0059b3;
-    }
-    .stSelectbox select:focus {
-        border: 2px solid #66b3ff;
-        outline: none;
-    }
-    .stSelectbox label:hover {
-        color: #0059b3;
-    }
+    background-color: #f0f7fc;  /* Soft light blue background */
+    color: #2c3e50;  /* Dark blue font for text readability */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Apply background color to the filter widgets */
+.stSelectbox, .stMarkdown, .stRadio, .stButton {
+    background-color: #e6f7ff; /* Pale blue background for widgets */
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly darker shadow */
+    color: #34495e; /* Dark gray font for contrast */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Customizing filter text and dropdown */
+.stSelectbox select {
+    font-size: 16px;
+    color: #2c3e50; /* Dark blue text for dropdown */
+    background-color: #ffffff; /* White background for dropdown options */
+    border-radius: 5px;
+    border: 1px solid #66b3ff; /* Blue border */
+    padding: 5px;
+}
+
+.stSelectbox label {
+    color: #2980b9; /* Brighter blue for labels */
+    font-weight: bold;
+}
+
+/* Styling buttons */
+.stButton {
+    background-color: #3498db; /* Brighter blue for buttons */
+    color: white; /* White font for readability */
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 8px 16px;
+    border: none; /* Remove default border */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.stButton:hover {
+    background-color: #1d6fa5; /* Darker blue on hover */
+}
+
+/* Dropdown focus effect */
+.stSelectbox select:focus {
+    border: 2px solid #1d6fa5; /* Darker blue border on focus */
+    outline: none;
+}
+
+/* Hover effect for labels */
+.stSelectbox label:hover {
+    color: #1abc9c; /* Aqua color for hover effect */
+}
