@@ -29,6 +29,10 @@ df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
 regions = sorted(df['Region'].unique())
 all_regions_option = ["All"] + regions
 col11, col12, col13 = st.columns([1, 4, 1])
+
+with col12:
+    st.subheader("Revenue by Month and Region")
+
 # Sidebar checkbox for regions
 selected_regions = []
 col11.write("Select Regions:")
@@ -59,7 +63,6 @@ if selected_pos != "All":
     filtered_df = filtered_df[filtered_df['POINT OF SALE'] == selected_pos]
 
 # Revenue by Month and Region Section
-col12.subheader("Revenue by Month and Region")
 
 # First graph: Total Revenue Trend by Month
 melted_df = filtered_df.melt(
