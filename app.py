@@ -180,7 +180,7 @@ fig_top_performers_last_year = px.bar(
 fig_top_performers_last_year.update_layout(
     xaxis_title="Point of Sale",
     yaxis_title="Last Year Revenue (USD)",
-    title_x=0.5  # Center the chart title
+    title_x=0.2  # Center the chart title
 )
 
 # Display the bar chart for last year
