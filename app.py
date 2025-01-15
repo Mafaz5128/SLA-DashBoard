@@ -138,7 +138,7 @@ fig_top_performers = px.bar(
     top_performers,
     x='POINT OF SALE',
     y='ACT -USD',
-    title=f"Top 5 Performers of  - {', '.join(selected_regions) or 'All Regions'}-2023",
+    title=f"Top 5 Performers of {', '.join(selected_regions) or 'All Regions'}-2023",
     text_auto='.2s',
     color='ACT -USD',
     labels={'ACT -USD': 'Actual Revenue (USD)', 'POINT OF SALE': 'Point of Sale'},
@@ -170,7 +170,7 @@ fig_top_performers_last_year = px.bar(
     top_performers_last_year,
     x='POINT OF SALE',
     y='LYR-USD (2023/24)',
-    title=f"Top 5 Performers of - {', '.join(selected_regions) or 'All Regions'}-2024",
+    title=f"Top 5 Performers of {', '.join(selected_regions) or 'All Regions'}-2024",
     color = 'LYR-USD (2023/24)',
     text_auto='.2s',
     labels={'LYR-USD (2023/24)': 'Last Year Revenue (USD)', 'POINT OF SALE': 'Point of Sale'},
@@ -181,7 +181,8 @@ fig_top_performers_last_year = px.bar(
 fig_top_performers_last_year.update_layout(
     xaxis_title="Point of Sale",
     yaxis_title="Last Year Revenue (USD)",
-    title_x=0.2  # Center the chart title
+    title_x=0.2,  # Center the chart title
+    title_font = dict(size=12)
 )
 
 # Display the bar chart for last year
