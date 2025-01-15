@@ -98,7 +98,7 @@ with tab1:
         x='Month',
         y='Revenue (USD)',
         color='Revenue Type',
-        title="Overall Revenue (USD) Trend by Month",
+        title=f"Revenue (USD) Trend by Month -{selected_regions}",
         markers=True
     )
 
