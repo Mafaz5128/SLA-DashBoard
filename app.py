@@ -126,7 +126,7 @@ fig_exloss.update_layout(
 a1.plotly_chart(fig_exloss, use_container_width=True)
 
 # Extract the top 5 performers by POS based on ACT-USD
-a2.subheader("Top 5 Perfomers -2024")
+st.subheader("Top 5 Perfomers")
 top_performers = (
     filtered_df.groupby('POINT OF SALE')['ACT -USD']
     .sum()
@@ -135,7 +135,7 @@ top_performers = (
 )
 
 # Display the top performers as a table
-a2.write(f"Top 5 Performers for {', '.join(selected_regions) or 'All Regions'}")
+a2.write(f"Top 5 Performers of {', '.join(selected_regions) or 'All Regions'} - 2024")
 a2.table(top_performers)
 
 # Optional: Visualize the top 5 performers with a bar chart
@@ -161,8 +161,6 @@ fig_top_performers.update_layout(
 a2.plotly_chart(fig_top_performers, use_container_width=True)
 
 # Extract Key Performers for Last Year
-a3.subheader("Key Players - 2023")
-
 # Extract the top 5 performers by POS based on LYR-USD (2023/24)
 top_performers_last_year = (
     filtered_df.groupby('POINT OF SALE')['LYR-USD (2023/24)']
@@ -172,7 +170,7 @@ top_performers_last_year = (
 )
 
 # Display the top performers for last year as a table
-a3.write(f"Top 5 Performers for {', '.join(selected_regions) or 'All Regions'}")
+a3.write(f"Top 5 Performers of {', '.join(selected_regions) or 'All Regions'} - 2023")
 a3.table(top_performers_last_year)
 
 # Optional: Visualize the top 5 performers for last year with a bar chart
