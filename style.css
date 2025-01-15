@@ -1,7 +1,4 @@
-st.markdown("""
-    <style>
-    /* Apply background color to the entire dashboard */
-    .block-container {
+.block-container {
         background-color: #f4f8fb;  /* Light blue background */
     }
     /* Apply background color to the filter widgets */
@@ -34,5 +31,3 @@ st.markdown("""
     .stSelectbox label:hover {
         color: #0059b3;
     }
-    </style>
-""", unsafe_allow_html=True)
