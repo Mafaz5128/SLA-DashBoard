@@ -126,7 +126,7 @@ fig_exloss.update_layout(
 a1.plotly_chart(fig_exloss, use_container_width=True)
 
 # Extract the top 5 performers by POS based on ACT-USD
-a2.subheader("Key Players -2024")
+a2.subheader("Top 5 Perfomers -2024")
 top_performers = (
     filtered_df.groupby('POINT OF SALE')['ACT -USD']
     .sum()
@@ -161,7 +161,7 @@ fig_top_performers.update_layout(
 a2.plotly_chart(fig_top_performers, use_container_width=True)
 
 # Extract Key Performers for Last Year
-a3.subheader("Key Players - Last Year (2023)")
+a3.subheader("Key Players - 2023")
 
 # Extract the top 5 performers by POS based on LYR-USD (2023/24)
 top_performers_last_year = (
