@@ -6,7 +6,7 @@
 #}
 
 /* Apply background color to the filter widgets */
-.stSelectbox, .stMarkdown, .stRadio, .stButton {
+.stSelectbox, .stRadio, .stButton {
     background-color: #4169e1; /* Pale blue background for widgets */
     border-radius: 10px;
     padding: 10px;
