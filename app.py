@@ -150,7 +150,7 @@ fig_top_performers = px.bar(
 fig_top_performers.update_layout(
     xaxis_title="Point of Sale",
     yaxis_title="Actual Revenue (USD)",
-    title_x=0.2 , # Center the chart title
+    title_x=0.1 , # Center the chart title
     title_font = dict(size=12)
 )
 
@@ -182,7 +182,7 @@ fig_top_performers_last_year = px.bar(
 fig_top_performers_last_year.update_layout(
     xaxis_title="Point of Sale",
     yaxis_title="Last Year Revenue (USD)",
-    title_x=0.2,  # Center the chart title
+    title_x=0.1,  # Center the chart title
     title_font = dict(size=12)
 )
 
