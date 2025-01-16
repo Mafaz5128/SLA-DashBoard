@@ -219,58 +219,58 @@ if uploaded_file is not None:
     col1, col2 = st.columns(2)
 
     # Actual Revenue Contribution Pie
-        fig_pie = go.Figure()
+    fig_pie = go.Figure()
 
     # Add Actual Revenue Pie
-        fig_pie.add_trace(go.Pie(
-            labels=revenue_cont_month.index,
-            values=revenue_cont_month,
-            hole=0.4,  # Make it a donut chart for modern look
-            marker=dict(colors=sns.color_palette("Set3").as_hex()),
-            textinfo='percent+label',  # Show percentage and label
-            textfont=dict(size=14),  # Customize text font size
-            hoverinfo='label+percent',  # Hover information
-            pull=[0.1 if value == revenue_cont_month.max() else 0 for value in revenue_cont_month],  # Pull out the largest slice for emphasis
-            rotation=90,  # Rotate the chart for better alignment
-            opacity=0.9,  # Add transparency
-            direction='clockwise',  # Clockwise direction for slices
-            name="Actual Revenue"  # Common legend name
-        ))
+    fig_pie.add_trace(go.Pie(
+        labels=revenue_cont_month.index,
+        values=revenue_cont_month,
+        hole=0.4,  # Make it a donut chart for modern look
+        marker=dict(colors=sns.color_palette("Set3").as_hex()),
+        textinfo='percent+label',  # Show percentage and label
+        textfont=dict(size=14),  # Customize text font size
+        hoverinfo='label+percent',  # Hover information
+        pull=[0.1 if value == revenue_cont_month.max() else 0 for value in revenue_cont_month],  # Pull out the largest slice for emphasis
+        rotation=90,  # Rotate the chart for better alignment
+        opacity=0.9,  # Add transparency
+        direction='clockwise',  # Clockwise direction for slices
+        name="Actual Revenue"  # Common legend name
+    ))
 
     # Add Last Year Revenue Pie
-        fig_pie.add_trace(go.Pie(
-            labels=revenue_cont_month_ly.index,
-            values=revenue_cont_month_ly,
-            hole=0.4,  # Donut style
-            marker=dict(colors=sns.color_palette("Set3").as_hex()),
-            textinfo='percent+label',
-            textfont=dict(size=14),
-            hoverinfo='label+percent',
-            pull=[0.1 if value == revenue_cont_month_ly.max() else 0 for value in revenue_cont_month_ly],
-            rotation=90,
-            opacity=0.9,
-            direction='clockwise',
-            name="Last Year Revenue"  # Common legend name
-        ))
+    fig_pie.add_trace(go.Pie(
+        labels=revenue_cont_month_ly.index,
+        values=revenue_cont_month_ly,
+        hole=0.4,  # Donut style
+        marker=dict(colors=sns.color_palette("Set3").as_hex()),
+        textinfo='percent+label',
+        textfont=dict(size=14),
+        hoverinfo='label+percent',
+        pull=[0.1 if value == revenue_cont_month_ly.max() else 0 for value in revenue_cont_month_ly],
+        rotation=90,
+        opacity=0.9,
+        direction='clockwise',
+        name="Last Year Revenue"  # Common legend name
+    ))
 
-        fig_pie.update_layout(
-            title=f"Revenue Contribution - {selected_month}",
-            title_x=0.5,  # Center the title
-            title_font=dict(size=16, family="Arial", color="#ffffff"),  # Title styling
-            showlegend=True,
-            legend=dict(
-                orientation="h",
-                x=0.5, y=-0.1,  # Position legend below the chart
-                xanchor="center",
-                yanchor="top",
-                font=dict(size=12, color="#ffffff")
-            ),
-            paper_bgcolor="#00172B",  # Background color for the chart
-            plot_bgcolor="#00172B",  # Plot background color
-        )
+    fig_pie.update_layout(
+        title=f"Revenue Contribution - {selected_month}",
+        title_x=0.5,  # Center the title
+        title_font=dict(size=16, family="Arial", color="#ffffff"),  # Title styling
+        showlegend=True,
+        legend=dict(
+            orientation="h",
+            x=0.5, y=-0.1,  # Position legend below the chart
+            xanchor="center",
+            yanchor="top",
+            font=dict(size=12, color="#ffffff")
+        ),
+        paper_bgcolor="#00172B",  # Background color for the chart
+        plot_bgcolor="#00172B",  # Plot background color
+    )
 
     # Display the combined pie chart with a common legend
-        col1.plotly_chart(fig_pie, use_container_width=True)
+    col1.plotly_chart(fig_pie, use_container_width=True)
 
 
 else:
