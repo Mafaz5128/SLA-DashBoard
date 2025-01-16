@@ -47,12 +47,16 @@ if uploaded_file is not None:
 
     st.subheader("Revenue by Month and Region")
 
-    # Set the month order explicitly
-    # Extract unique month values from the dataset and sort them
-    month_order = sorted(df['Month'].unique(), key=lambda x: pd.to_datetime(x, errors='coerce'))
 
-    # Set the month order explicitly
+
+
+    # Define the standard month order
+    month_order = ['January', 'February', 'March', 'April', 'May', 'June', 
+               'July', 'August', 'September', 'October', 'November', 'December']
+
+    # Ensure the 'Month' column is ordered by the standard month order
     df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
+
 
     # Rest of your code continues as usual...
 
