@@ -22,7 +22,7 @@ with open('style.css') as f:
 # Title Section
 st.markdown(
     """
-    <h1 style="text-align: center; color: black;">
+    <h1 style="text-align: center; color: white;">
         Station Revenue Analysis
     </h1>
     """,
