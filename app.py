@@ -30,12 +30,12 @@ st.markdown(
 )
 
 # File uploader widget
-uploaded_file = st.file_uploader("Upload your Excel file", type=["xlsx","csv"])
+uploaded_file = st.file_uploader("Upload your Excel file", type=["csv"])
 
 # Check if a file has been uploaded
 if uploaded_file is not None:
     # Load the uploaded Excel file
-    df = pd.read_excel(uploaded_file)
+    df = pd.read_csv(uploaded_file)
 
     # Show a preview of the uploaded data
     st.write("Data preview:", df.head())
