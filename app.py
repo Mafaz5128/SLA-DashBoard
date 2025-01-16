@@ -219,7 +219,7 @@ if uploaded_file is not None:
     col1, col2 = st.columns(2)
 
     # Actual Revenue Contribution Pie
-    fig_pie = go.Figure()
+        fig_pie = go.Figure()
 
     # Add Actual Revenue Pie
         fig_pie.add_trace(go.Pie(
