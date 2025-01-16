@@ -28,7 +28,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
+st.button("Data set Maker")
 # File uploader widget
 uploaded_file = st.file_uploader("Upload your Excel file", type=["csv"])
 
