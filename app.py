@@ -220,12 +220,12 @@ if uploaded_file is not None:
     col1, col2 = st.columns(2)
 
     # Actual Revenue Contribution Pie
-    fig_pie = go.Figure(data=[go.Pie(labels=revenue_cont_month.index, values=revenue_cont_month, marker=dict(colors=sns.color_palette("husl", 8).as_hex()))])
+    fig_pie = go.Figure(data=[go.Pie(labels=revenue_cont_month.index, values=revenue_cont_month, marker=dict(colors=sns.color_palette("Paired").as_hex()))])
     fig_pie.update_layout(title=f"Actual Revenue Contribution - {selected_month}")
     col1.plotly_chart(fig_pie, use_container_width=True)
 
     # Last Year Revenue Contribution Pie
-    fig_pie2 = go.Figure(data=[go.Pie(labels=revenue_cont_month_ly.index, values=revenue_cont_month_ly, marker=dict(colors=sns.color_palette("husl", 8).as_hex()))])
+    fig_pie2 = go.Figure(data=[go.Pie(labels=revenue_cont_month_ly.index, values=revenue_cont_month_ly, marker=dict(colors=sns.color_palette("Paired").as_hex()))])
     fig_pie2.update_layout(title=f"Last Year Revenue Contribution - {selected_month}")
     col2.plotly_chart(fig_pie2, use_container_width=True)
 
