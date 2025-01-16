@@ -3,8 +3,7 @@ import streamlit as st
 
 # Function to process each uploaded file
 def process_excel(file, columns_reference=None, month=None):
-    df = pd.read_excel(file, header=[0, 1, 2, 3, 4])
-    df = df.iloc[:, 18:]   
+    df = pd.read_excel(file, header=[0, 1, 2, 3, 4])  
     # Combine multi-level header into a single-level header
     df.columns = ['_'.join([str(col).strip() for col in col_tuple]) for col_tuple in df.columns.values]
 
@@ -15,6 +14,9 @@ def process_excel(file, columns_reference=None, month=None):
     # Add a 'Month' column and fill it with the selected month
     if month is not None:
         df['Month'] = month
+
+    # Select only the first 18 columns
+    df = df.iloc[:, :18]
 
     return df
 
