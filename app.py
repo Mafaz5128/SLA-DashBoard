@@ -30,7 +30,7 @@ st.markdown(
 )
 st.link_button(
     label="Data set Maker",
-    url="https://https://datasetmaker-3uy2exn2eq89ubuazxwwwu.streamlit.app/"
+    url="https://datasetmaker-3uy2exn2eq89ubuazxwwwu.streamlit.app/"
 )
 # File uploader widget
 uploaded_file = st.file_uploader("Upload your Excel file", type=["csv"])
