@@ -98,7 +98,7 @@ if uploaded_file is not None:
         value_name='Revenue (USD)'
     )
     avg_revenue_df = melted_df.groupby(['Month', 'Revenue Type'])['Revenue (USD)'].sum().reset_index()
-    avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=month_order, ordered=True)
+    avg_revenue_df['Month'] = pd.Categorical(avg_revenue_df['Month'], categories=sorted_month_order, ordered=True)
 
     # Tabs for Revenue Chart and Data Table
     tab1, tab2 = col12.tabs(["📈 Chart", "🗃 Data"])
