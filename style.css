@@ -1,39 +1,39 @@
 /* Apply background color to the entire dashboard */
-#.block-container {
-    #background-color: #f0f7fc;  /* Soft light blue background */
-    #color: #2c3e50;  /* Dark blue font for text readability */
-    #font-family: 'Arial', sans-serif;
-#}
+.block-container {
+    background-color: #00172B;  /* Dark background color */
+    color: #DCDCDC;  /* Light text color for readability */
+    font-family: 'sans-serif';
+}
 
 /* Apply background color to the filter widgets */
 .stSelectbox, .stRadio, .stButton {
-    background-color: #0083B8; /* Pale blue background for widgets */
+    background-color: #0083B8; /* Secondary background color for widgets */
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly darker shadow */
-    color:'red'; /* Dark gray font for contrast */
-    font-family: 'Arial', sans-serif;
+    color: #DCDCDC; /* Light text color for contrast */
+    font-family: 'sans-serif';
 }
 
 /* Customizing filter text and dropdown */
 .stSelectbox select {
     font-size: 16px;
-    color: #00000; /* Dark blue text for dropdown */
-    background-color: #ffffff; /* White background for dropdown options */
+    color: #DCDCDC; /* Light text color for dropdown */
+    background-color: #00172B; /* Dark background for dropdown options */
     border-radius: 5px;
     border: 1px solid #66b3ff; /* Blue border */
     padding: 5px;
 }
 
 .stSelectbox label {
-    color: #2980b9; /* Brighter blue for labels */
+    color: #E694FF; /* Primary color for labels */
     font-weight: bold;
 }
 
 /* Styling buttons */
 .stButton {
-    background-color: #3498db; /* Brighter blue for buttons */
-    color: white; /* White font for readability */
+    background-color: #E694FF; /* Primary color for buttons */
+    color: #00172B; /* Dark text color for contrast */
     font-weight: bold;
     border-radius: 10px;
     padding: 8px 16px;
@@ -43,12 +43,12 @@
 }
 
 .stButton:hover {
-    background-color: #1d6fa5; /* Darker blue on hover */
+    background-color: #D47CFF; /* Lighter primary color on hover */
 }
 
 /* Dropdown focus effect */
 .stSelectbox select:focus {
-    border: 2px solid #1d6fa5; /* Darker blue border on focus */
+    border: 2px solid #D47CFF; /* Lighter primary color border on focus */
     outline: none;
 }
 
