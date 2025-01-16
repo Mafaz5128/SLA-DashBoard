@@ -54,9 +54,14 @@ if uploaded_file is not None:
     month_order = ['January', 'February', 'March', 'April', 'May', 'June', 
                'July', 'August', 'September', 'October', 'November', 'December']
 
-    # Ensure the 'Month' column is ordered by the standard month order
-    df['Month'] = pd.Categorical(df['Month'], categories=month_order, ordered=True)
+# Extract the unique months present in the data
+    unique_months = df['Month'].unique()
 
+# Sort the unique months based on the standard month order
+    sorted_month_order = [month for month in month_order if month in unique_months]
+
+# Ensure the 'Month' column is ordered by the sorted month order
+    df['Month'] = pd.Categorical(df['Month'], categories=sorted_month_order, ordered=True)
 
     # Rest of your code continues as usual...
 
