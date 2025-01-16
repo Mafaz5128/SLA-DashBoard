@@ -138,8 +138,8 @@ if uploaded_file is not None:
     a1, a2, a3 = st.columns([1, 1, 1])
 
     a1.subheader("Exchange Rate Gain/Loss by Month")
-    exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum().reindex(month_order)
-    exloss_avg_ly = filtered_df.groupby('Month')['Exchange  -gain/(loss)'].sum().reindex(month_order)
+    exloss_avg = filtered_df.groupby('Month')['Exchange - gain/( loss)'].sum().reindex(sorted_month_order)
+    exloss_avg_ly = filtered_df.groupby('Month')['Exchange  -gain/(loss)'].sum().reindex(sorted_month_order)
 
     fig_exloss = go.Figure()
     fig_exloss.add_trace(go.Scatter(x=exloss_avg.index, y=exloss_avg, mode='lines+markers', name='Current', marker=dict(symbol='circle', color='#EF553B')))
