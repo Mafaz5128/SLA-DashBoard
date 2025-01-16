@@ -2,7 +2,7 @@
 .block-container {
     background-color: #00172B;  /* Dark background color */
     color: #DCDCDC;  /* Light text color for readability */
-    font-family: sans-serif; /* Default font */
+    #font-family: sans-serif; /* Default font */
 }
 
 /* Apply background color to the filter widgets */
@@ -12,7 +12,7 @@
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Slightly darker shadow */
     color: #DCDCDC; /* Light text color for contrast */
-    font-family: sans-serif; /* Default font */
+    #font-family: sans-serif; /* Default font */
 }
 
 /* Customizing filter text and dropdown */
@@ -28,7 +28,7 @@
 .stSelectbox label {
     color: #E694FF; /* Primary color for labels */
     font-weight: bold;
-    font-family: sans-serif; /* Default font */
+    #font-family: sans-serif; /* Default font */
 }
 
 /* Styling buttons */
@@ -41,7 +41,7 @@
     border: none; /* Remove default border */
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition */
-    font-family: sans-serif; /* Default font */
+    #font-family: sans-serif; /* Default font */
 }
 
 .stButton:hover {
