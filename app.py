@@ -209,19 +209,20 @@ if uploaded_file is not None:
     # Display the bar chart for last year
     a3.plotly_chart(fig_top_performers_last_year, use_container_width=True)
 
-    # Revenue Contribution Pie Charts
-    # Revenue Contribution Pie Charts
-    st.subheader("Revenue Contribution by Month and Region")
-    selected_month = st.selectbox("Select a Month:", sorted(df['Month'].unique()))
+st.subheader("Revenue Contribution by Month and Region")
+selected_month = st.selectbox("Select a Month:", sorted(df['Month'].unique()))
 
-    filtered_df_month = df[df['Month'] == selected_month]
-    revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. % - Actual'].sum()
-    revenue_cont_month_ly = filtered_df_month.groupby('Region')['REVENUE CONT. %-LYR'].sum()
+filtered_df_month = df[df['Month'] == selected_month]
+revenue_cont_month = filtered_df_month.groupby('Region')['REVENUE CONT. % - Actual'].sum()
+revenue_cont_month_ly = filtered_df_month.groupby('Region')['REVENUE CONT. %-LYR'].sum()
 
-    col1, col2 = st.columns(2)
+col1, col2 = st.columns(2)
 
-# Actual Revenue Contribution Pie
-    fig_pie = go.Figure(data=[go.Pie(
+    # Actual Revenue Contribution Pie
+    fig_pie = go.Figure()
+
+    # Add Actual Revenue Pie
+    fig_pie.add_trace(go.Pie(
         labels=revenue_cont_month.index,
         values=revenue_cont_month,
         hole=0.4,  # Make it a donut chart for modern look
@@ -232,11 +233,28 @@ if uploaded_file is not None:
         pull=[0.1 if value == revenue_cont_month.max() else 0 for value in revenue_cont_month],  # Pull out the largest slice for emphasis
         rotation=90,  # Rotate the chart for better alignment
         opacity=0.9,  # Add transparency
-        direction='clockwise'  # Clockwise direction for slices
-    )])
+        direction='clockwise',  # Clockwise direction for slices
+        name="Actual Revenue"  # Common legend name
+    ))
+
+    # Add Last Year Revenue Pie
+    fig_pie.add_trace(go.Pie(
+        labels=revenue_cont_month_ly.index,
+        values=revenue_cont_month_ly,
+        hole=0.4,  # Donut style
+        marker=dict(colors=sns.color_palette("Set3").as_hex()),
+        textinfo='percent+label',
+        textfont=dict(size=14),
+        hoverinfo='label+percent',
+        pull=[0.1 if value == revenue_cont_month_ly.max() else 0 for value in revenue_cont_month_ly],
+        rotation=90,
+        opacity=0.9,
+        direction='clockwise',
+        name="Last Year Revenue"  # Common legend name
+    ))
 
     fig_pie.update_layout(
-        title=f"Actual Revenue Contribution - {selected_month}",
+        title=f"Revenue Contribution - {selected_month}",
         title_x=0.5,  # Center the title
         title_font=dict(size=16, family="Arial", color="#ffffff"),  # Title styling
         showlegend=True,
@@ -251,40 +269,9 @@ if uploaded_file is not None:
         plot_bgcolor="#00172B",  # Plot background color
     )
 
+    # Display the combined pie chart with a common legend
     col1.plotly_chart(fig_pie, use_container_width=True)
 
-# Last Year Revenue Contribution Pie
-    fig_pie2 = go.Figure(data=[go.Pie(
-        labels=revenue_cont_month_ly.index,
-        values=revenue_cont_month_ly,
-        hole=0.4,  # Donut style
-        marker=dict(colors=sns.color_palette("Set3").as_hex()),
-        textinfo='percent+label',
-        textfont=dict(size=14),
-        hoverinfo='label+percent',
-        pull=[0.1 if value == revenue_cont_month_ly.max() else 0 for value in revenue_cont_month_ly],
-        rotation=90,
-        opacity=0.9,
-        direction='clockwise'
-    )])
-
-    fig_pie2.update_layout(
-        title=f"Last Year Revenue Contribution - {selected_month}",
-        title_x=0.5,
-        title_font=dict(size=16, family="Arial", color="#ffffff"),
-        showlegend=True,
-        legend=dict(
-            orientation="h",
-            x=0.5, y=-0.1,
-            xanchor="center",
-            yanchor="top",
-            font=dict(size=12, color="#ffffff")
-        ),
-        paper_bgcolor="#00172B",
-        plot_bgcolor="#00172B",
-    )
-
-    col2.plotly_chart(fig_pie2, use_container_width=True)
 
 else:
     st.write("Please upload a file to get started.")
